@@ -2,5 +2,6 @@
 
 import pyttsx3
 engine = pyttsx3.init()
-engine.say('Dear Thea!')
 engine.runAndWait()
+engine.say('Dear Thea!')
+engine.say('Wow')

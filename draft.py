@@ -17,18 +17,23 @@ AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "chinese.flac")
 # Main functions
 ######################################
 def changeSpeechSpeed(rate):
-    # default 200, range 0,400
+    # default 200, range 50,300
+    engine.setProperty('rate', rate);
+    return;
+
+def printAllVoices():
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        print(voice.id)
     return;
 
 def randomVoice(lan):
     # set a random voice
-    voices = engine.getProperty('voices')
     while True:
         randomVoice = random.choice(voices);
         if (lan in randomVoice.languages[0]):
             print(randomVoice)
             break
-
     engine.setProperty('voice', randomVoice.id);
 
 def recSphinx(audio):
@@ -77,10 +82,13 @@ def recGoogleCloud(audio):
         return "";
 
 ######################################
-#
+# Main
+# init Text to Speech Engine
+engine = pyttsx3.init()
+
 print("Welcome to the empty ear machine! Say something!")
 print("press x to quite")
-
+# printAllVoices()
 # obtain audio from the microphone
 r = sr.Recognizer()
 with sr.Microphone() as source:
@@ -95,13 +103,16 @@ with sr.Microphone() as source:
 #     audio = r.record(source)  # read the entire audio file
 
 
-#init Text to Speech Engine
-engine = pyttsx3.init()
-
-# speech to text
+#
+# # speech to text
 result = recGoogleTest(audio)
-randomVoice("en")
+# randomVoice("en")
+# specify voice setting
+engine.setProperty('rate', 150);
+engine.setProperty('voice', 'com.apple.speech.synthesis.voice.Zarvox');
+
 # text to speech
-engine.say(result)
+if (result != ""):
+  engine.say(result)
 
 engine.runAndWait()
