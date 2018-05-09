@@ -1,5 +1,5 @@
 The Empty Ear Machine
-# One Ear
+### One Ear
 python ear_demo.py
-# Run magi version
+### Run magi version
 sh magi.bash
