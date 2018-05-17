@@ -30,6 +30,8 @@ class toReadList():
             toRead.International[1:]
         print("Read", category, message)
         return message
+    def totalSize(self):
+        return len(self.dict["English"]) + len(self.dict["Danish"]) + len(self.dict["International"])
 
 
 class sttResult(object):
@@ -89,4 +91,13 @@ def listing_handler():
 @put('/handler/<name>')
 def read_handler(name):
     '''Handles reads'''
+    try:
+        if _toRead.totalSize() == 0:
+            raise EmptyError
+    except EmptyError:
+        response.status = 404
+        return "The List is empty"
+
+    # if not
+    return json.dumps(_toRead.read(name))
     
