@@ -1,8 +1,11 @@
-import subprocess
-from bottle import run, post, request, response, get, route
+#!Python
+# Put this in /Library/WebServer/Documents/
+from bottle import route, Bottle, run
 
-@route('/<path>',method = 'POST')
-def process(path):
-    return subprocess.check_output(['python',path+'.py'],shell=True)
+app = Bottle()
 
-run(host='localhost', port=8080, debug=True)
+@app.route('/hello')
+def hello():
+	return 'Hello World!'
+
+run(app, host='192.168.204.150', port=80)
