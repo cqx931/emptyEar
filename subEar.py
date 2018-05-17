@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import sys
-import pyttsx
+import pyttsx3
 import random
-import httplib, subprocess
+import http.client, subprocess
+import json
+# httplib for python2, http.client for python3
 
+voiceDict = {}
+
+#####################
 def init_engine():
-    engine = pyttsx.init()
+    engine = pyttsx3.init()
     return engine
 
 def say(s):
@@ -13,12 +18,12 @@ def say(s):
     engine.runAndWait() #blocks
 
 def randomVoice(lan):
-    # set a random voice
-    voices = engine.getProperty('voices')
+    voices = voiceDict[lan]
     while True:
         randomVoice = random.choice(voices);
+        print(randomVoice.languages[0])
         if (lan in randomVoice.languages[0]):
-            # print(randomVoice)
+            # 
             break
     if randomVoice.id: engine.setProperty('voice', randomVoice.id);
 
@@ -26,28 +31,45 @@ def changeSpeechSpeed(rate):
     # default 200, range 0,400
     return
 
+def getTTSLanguageCode(code):
+    if "Han" in code:
+        code = "zh_" + code[-2:]
+    else:
+        code = code.replace("-", "_")
+    return code;
+
 def defaultRead():
     # TODO: read sentence and language from data
     # if no answer received, read emptyMachine
-	return
+    print("default Read")
+    return
 
+def filterVoices():
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        if voice.languages[0] not in voiceDict.keys():
+            voiceDict[voice.languages[0]] = [voice]
+        else: 
+            voiceDict[voice.languages[0]].append(voice)
+    return
+#####################
 print("init tts")
 engine = init_engine()
-c = httplib.HTTPConnection('192.168.204.150', 80)
-c.request('GET', '/Hello')
-data = c.getresponse().read()
-print(data)
+filterVoices()
 
-# while loop
-c.request('GET', '/API', 'English')
-data = c.getresponse().read()
-print(data)
+# Change IP here
+c = http.client.HTTPConnection('192.168.0.21', 80)
 
-if data == None:
-	defaultRead()
-else:	
-	sentence = data.text
-	language = data.langauge
-	print("tts", sentence,language)
-	voice = randomVoice(str(language))
-	say(sentence)
+while True:
+    c.request('GET', '/API/English', 'English')
+    data = c.getresponse().read()
+    data = json.loads(data.decode())
+    if data == None:
+      defaultRead()
+    else: 
+      sentence = data["text"]
+      language = data["language"]
+      print("Received:", sentence,language)
+      language = getTTSLanguageCode(language)
+      voice = randomVoice(language)
+      say(sentence)
