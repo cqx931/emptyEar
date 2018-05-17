@@ -4,30 +4,33 @@ from bottle import post, get, put, delete
 
 class toReadList():
     def __init__(self):
-        self.dict = 
-        self.English = []
-        self.Danish = []
-        self.International = []
+        self.dict = {
+            "English": [],
+            "Danish": [],
+            "International": []
+        }
+
     def append(self, item):
         if item.language == "da-DK":
-            self.Danish.append(item)
+            self.dict["Danish"].append(item)
         elif "en" in item.language:
-            self.English.append(item)
+            self.dict["English"].append(item)
         else:
-            self.International.append(item)
+            self.dict["International"].append(item)
     def read(self, category):
         message = ""
         if category == "English":
-            message = self.English[0]
+            message = self.dict["English"][0]
             toRead.English[1:] # remove the entry
         elif category == "Danish":
-            message = self.Danish[0]
+            message = self.dict["Danish"][0]
             toRead.Danish[1:]
         else:
-            message = self.International[0]
+            message = self.dict["International"][0]
             toRead.International[1:]
         print("Read", category, message)
         return message
+
 
 class sttResult(object):
     text = ""
@@ -81,14 +84,9 @@ def creation_handler():
 def listing_handler():
     response.headers['Content-Type'] = 'application/json'
     response.headers['Cache-Control'] = 'no-cache'
-    return json.dumps({'names': list(_names)})
+    return json.dumps(_toRead.dict)
 
 @put('/handler/<name>')
-def update_handler(name):
-    '''Handles name updates'''
-    pass
-
-@delete('/handler/<name>')
-def delete_handler(name):
-    '''Handles name deletions'''
-    pass
+def read_handler(name):
+    '''Handles reads'''
+    
