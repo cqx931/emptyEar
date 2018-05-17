@@ -7,6 +7,12 @@ import json
 # httplib for python2, http.client for python3
 
 voiceDict = {}
+mode = "International"
+if len(sys.argv) > 1:
+    mode = sys.argv[1]
+# python subEar English
+# python subEar Dannish
+# python subEar International
 
 #####################
 def init_engine():
@@ -61,7 +67,7 @@ filterVoices()
 c = http.client.HTTPConnection('192.168.0.21', 80)
 
 while True:
-    c.request('GET', '/API/English', 'English')
+    c.request('GET', '/API/' + mode)
     data = c.getresponse().read()
     data = json.loads(data.decode())
     if data == None:
