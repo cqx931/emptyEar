@@ -16,7 +16,7 @@ import speech_recognition as sr
 
 # Settings
 dbug = True
-LAN_LIMIT = 3
+LAN_LIMIT = 9
 
 # Files
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))

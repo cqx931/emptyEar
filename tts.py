@@ -1,5 +1,5 @@
-# To solve thread issue
-# https://github.com/nateshmbhat/pyttsx3/issues/8
+
+SAVE_TO_FILE= True;
 
 import sys
 import pyttsx3
@@ -32,3 +32,4 @@ engine = init_engine()
 print("tts", sys.argv[1],sys.argv[2])
 voice = randomVoice(str(sys.argv[2]))
 say(str(sys.argv[1]))
+# TODO: Save to file
