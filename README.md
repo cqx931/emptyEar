@@ -34,7 +34,14 @@ pip install speech_recognition
 4.Get the project folder
 git clone https://github.com/cqx931/emptyEar
 
+-----------------------
+TO DO Friday
+1. SubMachine settings pdf
+2. terminal utf8???
 
+$ locale
+export LANG=en_US.UTF-8 
+-------------------
 
 To Fix
 - Timing - Wait

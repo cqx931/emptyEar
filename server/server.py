@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-
-# Put this in /Library/WebServer/Documents/
+#encoding: utf-8
+# Put this in the server folder
+# cp /Users/admin/emptyEar/server/server.py /Library/WebServer/Documents/
+# RUN!
 # sudo python server.py
+
+
+
 from bottle import Bottle, run
 from bottle import request, response
 import json
@@ -26,19 +31,30 @@ class toReadList():
             self.dict["English"].append(item)
         else:
             self.dict["International"].append(item)
+
     def read(self, category):
         message = ""
-        if category == "English" and len(self.dict["English"]) > 1:
-            message = self.dict["English"][0]
-            _toRead.dict["English"][1:] # remove the entry
-        elif category == "Danish" and len(self.dict["Danish"]) > 1:
-            message = self.dict["Danish"][0]
-            _toRead.dict["Danish"][1:]
-        elif len(self.dict["International"]) > 1:
-            message = self.dict["International"][0]
-            _toRead.dict["International"][1:]
-        print("Read", category, message)
+        d = self.dict
+        if category == "English" and len(d["English"]) > 1:
+            message = d["English"][0]
+            d["English"] = d["English"][1:] # remove the entry
+        elif category == "Danish" and len(d["Danish"]) > 1:
+            message = d["Danish"][0]
+            d["Danish"] = d["Danish"][1:] # remove the entry
+        elif len(d["International"]) > 1:
+            message = d["International"][0]
+            d["International"] = d["International"][1:]
+        print("Read", category, message) # remove the entry
         return message
+
+    def clear(self):
+    	self.dict = {
+            "English": [],
+            "Danish": [],
+            "International": []
+        }
+        return
+
     def totalSize(self):
         return len(self.dict["English"]) + len(self.dict["Danish"]) + len(self.dict["International"])
 
@@ -69,14 +85,16 @@ def connect():
 def read_handler(name):
     '''Handles reads'''
     try:
-    	readed = _toRead.read(name).text
+    	readed = _toRead.read(name)
         #if _toRead.totalSize() == 0:
             #raise EmptyError
     except EmptyError:
         response.status = 404
         return "The List is empty"
     # if not
-    return 'Readed:' + readed
+    response.headers['Content-Type'] = 'application/json'
+    print('Readed', readed.text, readed.language, _toRead.totalSize())
+    return json.dumps({'text': readed.text,'language':readed.language})
 
 #
 
@@ -107,7 +125,7 @@ def creation_handler():
 
     # add entry
     _toRead.append(entry)
-    
+    print('Written', entry.text, entry.language, _toRead.totalSize())
     # return 200 Success
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'text': entry.text})
@@ -118,5 +136,3 @@ def creation_handler():
 run(app, host=IP_ADRESS, port=80)
 
 #########################
-# copy the file to server folder
-# cp /Users/admin/emptyEar/server/server.py /Library/WebServer/Documents/
