@@ -68,8 +68,14 @@ c = http.client.HTTPConnection('192.168.0.21', 80)
 
 while True:
     c.request('GET', '/API/' + mode)
-    data = c.getresponse().read()
-    data = json.loads(data.decode())
+    try:
+        data = c.getresponse().read()
+    except ValueError:
+        print("No response")
+    try:
+        data = json.loads(data.decode())
+    except ValueError:
+        print("Unable to process data")
     if data == None:
       defaultRead()
     else: 

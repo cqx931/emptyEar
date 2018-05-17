@@ -94,7 +94,7 @@ def read_handler(name):
         return "The List is empty"
     # if not
     response.headers['Content-Type'] = 'application/json'
-    print('Readed', readed.text, readed.language, _toRead.totalSize())
+    print('[READ]', readed.text, readed.language, _toRead.totalSize())
     return json.dumps({'text': readed.text,'language':readed.language})
 
 #
@@ -126,7 +126,7 @@ def creation_handler():
 
     # add entry
     _toRead.append(entry)
-    print('Written', entry.text, entry.language, _toRead.totalSize())
+    print('[WRITTEN]', entry.text, entry.language, _toRead.totalSize())
     # return 200 Success
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'text': entry.text})
