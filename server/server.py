@@ -33,7 +33,7 @@ class toReadList():
             self.dict["International"].append(item)
 
     def read(self, category):
-        message = ""
+        message = None
         d = self.dict
         if category == "English" and len(d["English"]) > 1:
             message = d["English"][0]
@@ -41,7 +41,7 @@ class toReadList():
         elif category == "Danish" and len(d["Danish"]) > 1:
             message = d["Danish"][0]
             d["Danish"] = d["Danish"][1:] # remove the entry
-        elif len(d["International"]) > 1:
+        elif category == "International" and len(d["International"]) > 1:
             message = d["International"][0]
             d["International"] = d["International"][1:]
         print("Read", category, message) # remove the entry
@@ -89,6 +89,7 @@ def read_handler(name):
         #if _toRead.totalSize() == 0:
             #raise EmptyError
     except EmptyError:
+    	# None if the list is empty
         response.status = 404
         return "The List is empty"
     # if not

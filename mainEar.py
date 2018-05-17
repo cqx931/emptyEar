@@ -20,7 +20,7 @@ import speech_recognition as sr
 
 # Settings
 dbug = True
-LAN_LIMIT = 10
+LAN_LIMIT = 20
 IP_ADDRESS = '192.168.0.21'
 PORT = '80'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
@@ -133,7 +133,7 @@ def recGoogleCloud(audio, lg, results=None):
         return "";
 
 def batchRequestGoogleCloud(audio, target, limit):
-    # TODO
+    # TODO: Sequence
     
     subArray = target[0:limit+1]
     threads = [None] * len(subArray)
@@ -147,6 +147,10 @@ def batchRequestGoogleCloud(audio, target, limit):
     # do some other stuff
     for i in range(len(threads)):
         threads[i].join()
+    
+    # deal with the other half
+    subArray = target[limit:]
+
     
     return;
 
