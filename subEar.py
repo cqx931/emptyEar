@@ -1,10 +1,11 @@
-import httplib, subprocess
+#!/usr/bin/env python3
 import sys
-import pyttsx3
+import pyttsx
 import random
+import httplib, subprocess
 
 def init_engine():
-    engine = pyttsx3.init()
+    engine = pyttsx.init()
     return engine
 
 def say(s):
@@ -35,9 +36,9 @@ engine = init_engine()
 c = httplib.HTTPConnection('192.168.204.150', 80)
 
 # while loop
-c.request('POST', '/hello', '{}')
+c.request('GET', '/API', 'English')
 data = c.getresponse().read()
-
+print(data)
 if data == None:
 	defaultRead()
 else:	
