@@ -30,13 +30,13 @@ class toReadList():
         message = ""
         if category == "English" and len(self.dict["English"]) > 1:
             message = self.dict["English"][0]
-            toRead.English[1:] # remove the entry
+            _toRead.dict["English"][1:] # remove the entry
         elif category == "Danish" and len(self.dict["Danish"]) > 1:
             message = self.dict["Danish"][0]
-            toRead.Danish[1:]
+            _toRead.dict["Danish"][1:]
         elif len(self.dict["International"]) > 1:
             message = self.dict["International"][0]
-            toRead.International[1:]
+            _toRead.dict["International"][1:]
         print("Read", category, message)
         return message
     def totalSize(self):
@@ -69,14 +69,14 @@ def connect():
 def read_handler(name):
     '''Handles reads'''
     try:
-    	print(name)
+    	readed = _toRead.read(name).text
         #if _toRead.totalSize() == 0:
             #raise EmptyError
     except EmptyError:
         response.status = 404
         return "The List is empty"
     # if not
-    return json.dumps(_toRead.read(name))
+    return 'Readed:' + readed
 
 #
 
@@ -84,25 +84,20 @@ def read_handler(name):
 def creation_handler():
     try:
         # parse input data      
-        try:  	
-            data = request.json()
-            print(data)
-        except:
-            raise ValueError
-
-        if data is None:
-            raise ValueError
-
-        # extract and validate 
         try:
-            entry = sttResult()
-            entry.text = data['text']
-            entry.language = data['language']
+            data = json.loads(request.body.read()) #raw format
         except (TypeError, KeyError):
             raise ValueError
+        
+        if data is None:
+        	raise ValueError
+        
+        # convert to sttResult
+        entry = sttResult(data['text'],data['language'])
 
     except ValueError:
         # if bad request data, return 400 Bad Request
+        #here
         response.status = 400
         return
 
@@ -117,7 +112,11 @@ def creation_handler():
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'text': entry.text})
 
+
+#########################
+
 run(app, host=IP_ADRESS, port=80)
 
+#########################
 # copy the file to server folder
 # cp /Users/admin/emptyEar/server/server.py /Library/WebServer/Documents/

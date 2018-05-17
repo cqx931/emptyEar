@@ -23,7 +23,7 @@ dbug = True
 LAN_LIMIT = 10
 IP_ADDRESS = '192.168.0.21'
 PORT = '80'
-URL = 'http://' + IP_ADDRESS + ':' + PORT
+POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
 
 # Files
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))
@@ -116,7 +116,8 @@ def recGoogleCloud(audio, lg, results=None):
         }
         toRead.append(item)
         # Broadcast to server
-        c.request('PUT', '/API', 'json.dumps(item)')
+        headers = {'Content-type': 'application/json'}
+        requests.post(POSTURL, data=json.dumps(item), headers=headers)
         quit()
         return result;
     except sr.UnknownValueError:
@@ -188,13 +189,6 @@ c = httplib.HTTPConnection(IP_ADDRESS, 80)
 c.request('GET', '/')
 data = c.getresponse().read()
 print(data)
-headers = {'Content-type': 'application/json'}
-data = {
-    "test": "test machine",
-    "language": "English"
-}
-r = requests.post(URL, json=json.dumps(data), headers=headers)
-quit()
 
 # Load language list
 loadLanguages()
