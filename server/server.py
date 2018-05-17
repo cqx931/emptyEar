@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Put this in /Library/WebServer/Documents/
+# sudo python server.py
 from bottle import Bottle, run
 from bottle import request, response
 
@@ -19,4 +20,11 @@ def listing_handler():
     return "test"
 
 #TODO: API should goes here
-run(app, host='192.168.204.150', port=80)
+
+# Subject to change according to network
+# ipconfig getifaddr en1
+# library 192.168.204.150
+run(app, host='192.168.0.21', port=80)
+
+# copy the file to server folder
+# cp /Users/admin/emptyEar/server/server.py /Library/WebServer/Documents/
