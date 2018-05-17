@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 
-# Put this in /Library/WebServer/Documents/
-# sudo python server.py
-# Hit Ctrl-C to quit.
-
+# Network related
 from bottle import route, Bottle, run
+import requests
+import httplib, urllib
 
-# general library
+# General library
 import json
 import time
 import sys
@@ -22,6 +21,9 @@ import speech_recognition as sr
 # Settings
 dbug = True
 LAN_LIMIT = 10
+IP_ADDRESS = '192.168.0.21'
+PORT = '80'
+URL = 'http://' + IP_ADDRESS + ':' + PORT
 
 # Files
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))
@@ -57,33 +59,6 @@ class sttResult(object):
         self.text = text
         self.language = language
 
-class toReadList():
-    def __init__(self):
-        self.English = []
-        self.Danish = []
-        self.International = []
-    def append(self, item):
-    	if item.language == "da-DK":
-    		self.Danish.append(item)
-    	elif "en" in item.language:
-    		self.English.append(item)
-    	else:
-    		self.International.append(item)
-    def read(self, category):
-     	message = ""
-     	if category == "English":
-     		message = self.English[0]
-     		toRead.English[1:] # remove the entry
-     	elif category == "Danish":
-     		message = self.Danish[0]
-     		toRead.Danish[1:]
-     	else:
-     		message = self.International[0]
-     		toRead.International[1:]
-        print("Read", category, message)
-     	return message;
-
-
 def loadLanguages():
   with open(LANGUAGE_CODE_FILE , 'r') as myfile:
     data = myfile.read()
@@ -98,7 +73,7 @@ def loadLanguages():
   return;
 
 def recSphinx(audio):
-    # recognize speech using Sphinx
+    # recognize speech using Sphinx: in case internet is not working
     try:
         result = r.recognize_sphinx(audio)
         pt("Sphinx thinks you said " + result)
@@ -135,8 +110,14 @@ def recGoogleCloud(audio, lg, results=None):
         result = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS,language=lg)
         pt("Google Cloud Speech thinks you said " + result)
         
-        item = sttResult(result, lg)
+        item = {
+            "text": result,
+            "language": lg
+        }
         toRead.append(item)
+        # Broadcast to server
+        c.request('PUT', '/API', 'json.dumps(item)')
+        quit()
         return result;
     except sr.UnknownValueError:
         pt("Google Cloud Speech could not understand audio " + lg)
@@ -196,36 +177,24 @@ def recog(audio, target):
     results = batchRequestGoogleCloud(audio, target, LAN_LIMIT)
     return
 
-def startServer():
-    run(app, host='192.168.204.150', port=80)
-    return
-#######################
-
-#SEVER
-app = Bottle()
-# Define the responses
-@app.route('/Hello')
-def getDanish():
-    return 'Hello!'
-@app.route('/Danish')
-def getDanish():
-    return toRead.read("Danish")
-@app.route('/English')
-def getEnglish():
-    message = toRead.read("English")
-    return message
-@app.route('/International')
-def getInternational():
-    return toRead.read("International")
-
-T_server = Thread(target=startServer)
-T_server.start()
-
 #######################
 
 print("...initializing...")
 # Initialize speech recognition
 r = MySR()
+# Initialize server
+# Change Server IP
+c = httplib.HTTPConnection(IP_ADDRESS, 80)
+c.request('GET', '/')
+data = c.getresponse().read()
+print(data)
+headers = {'Content-type': 'application/json'}
+data = {
+    "test": "test machine",
+    "language": "English"
+}
+r = requests.post(URL, json=json.dumps(data), headers=headers)
+quit()
 
 # Load language list
 loadLanguages()
@@ -236,7 +205,7 @@ with sr.AudioFile(AUDIO_FILE) as source:
     sampleAudio = r.record(source)  
 
 # shared Global variables
-toRead = toReadList()
+toRead = []
 
 T_recognition = Thread(target=recog,args=(sampleAudio,TARGET))
 T_recognition.start()
@@ -253,4 +222,9 @@ with m as source:
 # start listening in the background (note that we don't have to do this inside a `with` statement)
 stop_listening = r.listen_in_background(m, speechRecHandler) 
 
+# do some unrelated computations for 5 seconds
+for _ in range(50): time.sleep(0.1)  # we're still listening even though the main thread is doing other things
 
+# do some more unrelated things
+while True: time.sleep(0.1)
+#

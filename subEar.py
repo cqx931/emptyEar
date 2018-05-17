@@ -34,11 +34,15 @@ def defaultRead():
 print("init tts")
 engine = init_engine()
 c = httplib.HTTPConnection('192.168.204.150', 80)
+c.request('GET', '/Hello')
+data = c.getresponse().read()
+print(data)
 
 # while loop
 c.request('GET', '/API', 'English')
 data = c.getresponse().read()
 print(data)
+
 if data == None:
 	defaultRead()
 else:	
