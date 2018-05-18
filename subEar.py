@@ -8,7 +8,7 @@ import json
 
 voiceDict = {}
 
-IP_ADRESS = '192.168.0.21'
+IP_ADRESS = '192.168.204.138'
 PORT = '8080'
 
 mode = "International"
@@ -75,8 +75,10 @@ while True:
     data = c.getresponse().read()
     print(data)
     data = json.loads(data)
-    if data == None:
+    if data["text"] == None and data["language"] == None:
+        # Empty list
       defaultRead()
+      time.sleep(1) 
     else: 
       sentence = data["text"]
       language = data["language"]
