@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="519px" height="193px" viewBox="0 0 519 193" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="LOGO" transform="translate(-382.000000, -289.000000)">
+            <g id="Logo" transform="translate(-353.000000, -219.000000)">
+                <g id="icon" transform="translate(736.000000, 508.000000)">
+                    <path d="M62,85 L62,89 L0,89 L0,85 L62,85 Z M244,85 L518,85 L518,89 L244,89 L244,85 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                    <g id="Group">
+                        <g id="Ear" transform="translate(62.000000, 0.000000)">
+                            <path d="M35,63 C36.0569646,28.026814 64.7403842,0 99.9698171,0 C135.868326,0 164.969817,29.1014913 164.969817,65 C164.969817,92.0394994 148.459336,115.222769 124.969818,125.018366 L124.969817,106.202259 C138.752974,97.8879003 147.969817,82.7703046 147.969817,65.5 C147.969817,39.2664744 126.703343,18 100.469817,18 C75.0748778,18 54.3345097,37.9285882 53.0344773,63 L35,63 Z" id="Combined-Shape" fill="#FFFFFF" opacity="0.871376812"></path>
+                            <path d="M61.3915253,154.866593 L78.9304997,154.866593 C78.8898043,155.353546 78.8690471,155.846166 78.8690471,156.343634 C78.8690471,166.008617 86.704064,173.843634 96.3690471,173.843634 C106.03403,173.843634 113.869047,166.008617 113.869047,156.343634 C113.869047,150.934766 111.415184,146.09903 107.559982,142.888948 L107.559982,124.3718 C121.362037,129.062021 131.292556,142.130621 131.292556,157.518618 C131.292556,176.848584 115.622522,192.518618 96.2925559,192.518618 C76.9625896,192.518618 61.2925559,176.848584 61.2925559,157.518618 C61.2925559,156.626419 61.3259393,155.742017 61.3915253,154.866593 Z" id="Combined-Shape" fill="#FFFFFF" opacity="0.871376812"></path>
+                            <path d="M125.841938,92.59975 C125.859375,92.0546875 126,91.5450625 126,91 C126,71.119 109.880719,55 90,55 C76.5174375,55 64.9071562,62.506 58.737375,73.47475 C57.1992188,73.2022188 55.6259062,73 54,73 C42.2049375,73 32.2821562,80.6114688 28.6084688,91.1583438 C28.0724063,91.1231875 27.5537813,91 27,91 C12.09375,91 0,103.09375 0,118 C0,132.90625 12.09375,145 27,145 L117,145 C131.90625,145 144,132.90625 144,118 C144,106.205219 136.388813,96.2734375 125.841938,92.59975 Z" id="Shape" fill="#5E5E5E" fill-rule="nonzero"></path>
+                        </g>
+                        <text id="THE-EMPTY-EAR" font-family="Futura-CondensedMedium, Futura" font-size="44" font-style="condensed" font-weight="500" letter-spacing="0.275" fill="#FFFFFF">
+                            <tspan x="0" y="131">THE    EMPTY    EAR</tspan>
+                        </text>
+                        <text id="machine" font-family="Futura-CondensedMedium, Futura" font-size="44" font-style="condensed" font-weight="500" letter-spacing="0.275" fill="#FFFFFF">
+                            <tspan x="292.971094" y="131">machine</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
