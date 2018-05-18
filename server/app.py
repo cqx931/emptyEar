@@ -83,6 +83,10 @@ socketio = SocketIO(app)
 @app.route("/")
 def hello():
     return render_template('main.html')
+
+@app.route("/projector")
+def hello():
+    return render_template('p5.html')
 #########################
 @socketio.on('connect')
 def ws_conn():
