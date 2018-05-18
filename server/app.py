@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 #encoding: utf-8
-# Put this in the server folder
-# cp /Users/admin/emptyEar/server/server.py /Library/WebServer/Documents/
+
+# copy the server folder to the server folder
+# cp /Users/admin/emptyEar/server/. /Library/WebServer/Documents/
 # RUN!
 # sudo python server.py
+
+# Reference: https://github.com/mattmakai/python-websockets-example
 
 from flask import Flask, render_template
 from flask_socketio import SocketIO
@@ -81,11 +84,15 @@ socketio = SocketIO(app)
 def hello():
     return render_template('main.html')
 #########################
-@socketio.on('connect', namespace='sfpy')
+@socketio.on('connect', namespace='/socket')
 def ws_conn():
     c = db.incr('user_count')
-    socketio.emit('msg',)
+    socketio.emit('msg',{'count', c}, namespace='/socket')
 
+@socketio.on('disconnect', namespace='/socket')
+def ws_conn():
+    c = db.decr('user_count')
+    socketio.emit('msg',{'count', c}, namespace='/socket')
 
 #########################
 @app.route('/API/<name>', methods = ['GET']) #get

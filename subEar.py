@@ -73,7 +73,8 @@ c = http.client.HTTPConnection(IP_ADRESS, PORT)
 while True:
     c.request('GET', '/API/' + mode)
     data = c.getresponse().read()
-    data = json.loads(data.decode())
+    print(data)
+    data = json.loads(data)
     if data == None:
       defaultRead()
     else: 
