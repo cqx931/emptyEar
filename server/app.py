@@ -18,8 +18,8 @@ import json
 # ipconfig getifaddr en1
 # library 192.168.204.150
 
-IP_ADRESS = '192.168.0.21'
-PORT = '8080'
+IP_ADRESS = '192.168.204.138'
+PORT = 8080
 
 class toReadList():
     def __init__(self):
@@ -86,34 +86,36 @@ def hello():
 #########################
 @socketio.on('connect')
 def ws_conn():
-    socketio.emit('msg','remember')
+    socketio.emit('msg',"connect")
 
-# @socketio.on('disconnect')
-# def ws_conn():
-#     socketio.emit('msg','Bye')
-
-# @socketio.on('send_message', namespace='/socket')
-#     def handle_source(json_data):
-#         text = json_data['message'].encode('ascii', 'ignore')
-#         emit('echo', {'echo': 'Server Says: '+text}, broadcast=True, include_self=False)
+@socketio.on('disconnect')
+def ws_conn():
+    socketio.emit('msg',"disconnect")
 
 #########################
 @app.route('/API/<name>', methods = ['GET']) #get
 def read_handler(name):
     '''Handles reads'''
+    emptyListResponse = Response(json.dumps({'text': None,'language':None}))
+    emptyListResponse.headers['Content-Type'] = 'application/json'
+
     try:
     	readed = _toRead.read(name)
         #if _toRead.totalSize() == 0:
             #raise EmptyError
-    except EmptyError:
+    except ValueError:
     	# None if the list is empty
-        Response.status = 404
-        return "The List is empty"
-    # if not
+        
+        return emptyListResponse
+    if not hasattr(readed, 'text'):
+       
+        return emptyListResponse
+
     print('[READ]', readed.text, readed.language, _toRead.totalSize())
     resp = Response(json.dumps({'text': readed.text,'language':readed.language}))
     resp.headers['Content-Type'] = 'application/json'
-    socketio.emit('msg','READ')
+    #TODO socket
+    socketio.emit('msg',"read")
     return resp
 
 #
@@ -162,5 +164,5 @@ def creation_handler():
 #########################
 
 if __name__ == '__main__':
-	app.run(host=IP_ADRESS, port=PORT, debug=True)
+	socketio.run(app, IP_ADRESS, port=PORT, debug=True)
 #########################
