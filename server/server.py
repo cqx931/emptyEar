@@ -10,7 +10,8 @@
 from bottle import Bottle, run
 from bottle import request, response
 import json
-
+from bottle.ext.websocket import GeventWebSocketServer
+from bottle.ext.websocket import websocket
 # Subject to change according to network
 # ipconfig getifaddr en1
 # library 192.168.204.150
@@ -131,9 +132,16 @@ def creation_handler():
     response.headers['Content-Type'] = 'application/json'
     return json.dumps({'text': entry.text})
 
-
+@app.get('/websocket', apply=[websocket])
+def echo(ws):
+    while True:
+        msg = ws.receive()
+        if msg is not None:
+            ws.send(msg)
+        else: break
+        
 #########################
 
-run(app, host=IP_ADRESS, port=80)
+run(app, host=IP_ADRESS, port=80, server=GeventWebSocketServer)
 
 #########################
