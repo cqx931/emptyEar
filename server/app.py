@@ -6,6 +6,8 @@
 # sudo python server.py
 
 from flask import Flask, render_template
+from flask_socketio import SocketIO
+from flask import request, Response
 import redis
 import json
 
@@ -72,11 +74,18 @@ _toRead = toReadList()     # the set of text to be read
 
 app = Flask(__name__)
 db = redis.StrictRedis(IP_ADRESS, PORT, 0)
+socketio = SocketIO(app)
 
 #################
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return render_template('main.html')
+#########################
+@socketio.on('connect', namespace='sfpy')
+def ws_conn():
+    c = db.incr('user_count')
+    socketio.emit('msg',)
+
 
 #########################
 @app.route('/API/<name>', methods = ['GET']) #get
@@ -88,12 +97,13 @@ def read_handler(name):
             #raise EmptyError
     except EmptyError:
     	# None if the list is empty
-        response.status = 404
+        Response.status = 404
         return "The List is empty"
     # if not
-    response.headers['Content-Type'] = 'application/json'
     print('[READ]', readed.text, readed.language, _toRead.totalSize())
-    return json.dumps({'text': readed.text,'language':readed.language})
+    resp = Response(json.dumps({'text': readed.text,'language':readed.language}))
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
 
 #
 
@@ -102,7 +112,7 @@ def creation_handler():
     try:
         # parse input data      
         try:
-            data = json.loads(request.body.read()) #raw format
+            data = json.loads(request.data) #raw format
         except (TypeError, KeyError):
             raise ValueError
         
@@ -115,19 +125,20 @@ def creation_handler():
     except ValueError:
         # if bad request data, return 400 Bad Request
         #here
-        response.status = 400
+        Response.status = 400
         return
 
     except KeyError:
-        response.status = 409
+        Response.status = 409
         return
 
     # add entry
     _toRead.append(entry)
     print('[WRITTEN]', entry.text, entry.language, _toRead.totalSize())
     # return 200 Success
-    response.headers['Content-Type'] = 'application/json'
-    return json.dumps({'text': entry.text})
+    resp = Response(json.dumps({'text': entry.text}))
+    resp.headers['Content-Type'] = 'application/json'
+    return resp
 
 # @app.get('/websocket', apply=[websocket])
 # def echo(ws):
