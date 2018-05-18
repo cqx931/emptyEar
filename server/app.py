@@ -115,7 +115,7 @@ def read_handler(name):
     resp = Response(json.dumps({'text': readed.text,'language':readed.language}))
     resp.headers['Content-Type'] = 'application/json'
     #TODO socket
-    socketio.emit('msg',"read")
+    socketio.emit('msg',{"action":"Read","text":readed.text,"language": readed.language})
     return resp
 
 #

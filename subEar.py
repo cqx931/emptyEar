@@ -77,6 +77,7 @@ while True:
     data = json.loads(data)
     if data["text"] == None and data["language"] == None:
         # Empty list
+        # TODO
       defaultRead()
       time.sleep(1) 
     else: 
