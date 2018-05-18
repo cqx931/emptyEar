@@ -14,7 +14,7 @@
  }
 
  body {
-   background-image:url(https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg);
+   background-image:url('https://github.com/cqx931/emptyEar/raw/master/data/bg.jpg');
    background-position: cover;
    user-select:none;
    overflow:none;
@@ -32,12 +32,28 @@
    		padding-right: 17px;
    		box-sizing:content-box;
       }*/
-      .log{
-       width:100%;
-       height:100%;
+      .screen{
+       width:96%;
+       height:96%;
        margin:0;
-       padding:20px;
-     }
+       padding:2%;
+      }
+      .log {
+
+      }
+      .waiting, .listening {
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+      }
+      .waiting {
+        background-size: contain;
+        
+      }
+      .listening {
+ 
+        display: none;
+      }
      .role {
        position:relative;
        height:33%;
@@ -88,19 +104,28 @@
 </head>
 <body>
   <div class="wrap">
-   <div class="log" id="danish">
+    <div class="screen waiting">
+      <svg width="5cm" height="4cm" version="1.1"
+     xmlns="https://raw.githubusercontent.com/cqx931/emptyEar/master/data/EmptyEar.svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      
+    </div>
+     <div class="screen listening ">
+      <svg width="5cm" height="4cm" version="1.1"
+     xmlns="https://raw.githubusercontent.com/cqx931/emptyEar/master/data/listening.svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    </div>
+   <div class="screen log" id="danish">
 
     <div class="role reading">
      Den tomme øremaskine
    </div>
  </div>
- <div class="log" id="english">
+ <div class="screen log" id="english">
 
    <div class="role reading">The empty Ear Machine</div>
    <div class="role reading">The empty row machine</div>
    <div class="role reading">I am the Machine</div>		
  </div>
- <div class="log" id="international">
+ <div class="screen log" id="international">
   <div class="role reading">何で来て夢を</div>
   <div class="role reading">इस राजनीति में हूं</div>
   <div class="role reading">et c'est la dictée numéro 1</div>
@@ -125,10 +150,13 @@ $(document).ready(function() {
             var earName = getParameterByName('role')
             $('#'+ earName + '').show()
             var url = "http://" + document.domain + ":" + location.port;
-            var socket = io.connect(url);
-            socket.on('msg', function(msg) {
-              console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
-            });
+            if (typeof io != 'undefined') {
+              var socket = io.connect(url);
+              socket.on('msg', function(msg) {
+                console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
+              });
+            }
+            
           });
         </script>
       </body>

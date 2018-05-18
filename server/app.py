@@ -86,7 +86,7 @@ socketio = SocketIO(app)
 #################
 # Visual
 @ app.route("/")
-def hello():
+def interface():
     return render_template('main.html')
 
 #########
