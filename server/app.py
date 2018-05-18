@@ -84,15 +84,18 @@ socketio = SocketIO(app)
 def hello():
     return render_template('main.html')
 #########################
-@socketio.on('connect', namespace='/socket')
+@socketio.on('connect')
 def ws_conn():
-    c = db.incr('user_count')
-    socketio.emit('msg',{'count', c}, namespace='/socket')
+    socketio.emit('msg','remember')
 
-@socketio.on('disconnect', namespace='/socket')
-def ws_conn():
-    c = db.decr('user_count')
-    socketio.emit('msg',{'count', c}, namespace='/socket')
+# @socketio.on('disconnect')
+# def ws_conn():
+#     socketio.emit('msg','Bye')
+
+# @socketio.on('send_message', namespace='/socket')
+#     def handle_source(json_data):
+#         text = json_data['message'].encode('ascii', 'ignore')
+#         emit('echo', {'echo': 'Server Says: '+text}, broadcast=True, include_self=False)
 
 #########################
 @app.route('/API/<name>', methods = ['GET']) #get
@@ -110,6 +113,7 @@ def read_handler(name):
     print('[READ]', readed.text, readed.language, _toRead.totalSize())
     resp = Response(json.dumps({'text': readed.text,'language':readed.language}))
     resp.headers['Content-Type'] = 'application/json'
+    socketio.emit('msg','READ')
     return resp
 
 #
