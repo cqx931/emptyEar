@@ -15,6 +15,7 @@ from bottle.ext.websocket import websocket
 # Subject to change according to network
 # ipconfig getifaddr en1
 # library 192.168.204.150
+# ONSITE 05.18, RIGHT SIDE.  192.168.204.139
 IP_ADRESS = '192.168.0.21'
 
 class toReadList():
