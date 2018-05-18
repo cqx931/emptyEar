@@ -1,123 +1,135 @@
 <html>
-<head><title>The Empty Eear Machine</title>
-    <script type="text/javascript" 
-                src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
-   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-   <style type="text/css">
-   @font-face {
-	    font-family: 'DINCond';
-	    src: url('https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg') format('woff');
-	    font-weight: bold;
-	    font-style: normal;
-    }
+<head>
+  <title>The Empty Eear Machine</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <style type="text/css">
 
+  @font-face {
+   font-family: 'DINCond';
+   src: url('https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg') format('woff');
+   font-weight: bold;
+   font-style: normal;
+ }
 
-   	body {
-   		background-image:url(https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg);
-   		background-position: cover;
-   		user-select:none;
-   		overflow:none;
-   		width:100%;
-   		height:100%;
+ body {
+   background-image:url(https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg);
+   background-position: cover;
+   user-select:none;
+   overflow:none;
+   width:100%;
+   height:100%;
    		/*position: fixed;  //finalize
 	    top: 0;
 	    left: 0;
 	    bottom:0;*/
-   	}
-   	.wrap{
+    }
+   	/*.wrap{
    		width:100%;
    		height:100%;
    		overflow-y: scroll;
    		padding-right: 17px;
    		box-sizing:content-box;
-   	}
-   	.log{
-   		width:100%;
-   		height:100%;
-   		margin:0;
-   		padding:20px;
-   	}
-   	.role {
-   		position:relative;
-        height:33%;
-        /*background-color: rgba(255,255,255,.2);*/ /*debug*/
-        /*border:black solid 1px;*//*debug*/
-        /*text*/
-        font-size: 300;
-        vertical-align: middle;
-        color:white;
-        display: inline-block;
-        white-space: nowrap;
-   	}
-   	#danish .role {
-   		margin:280px 0;
-   	}
-   	#international, #danish{
-   		font-family: 'Lato', sans-serif;
-   		font-style: bold;
-   	}
-   	#english {
-   		font-family:'DINCond', sans-serif;
-   		letter-spacing: 1px;
-   	}
-   	.log {
-   		/*display:none;*/
-   	}
-   	.reading{
-   		 /*TODO: speed match reading?*/
-   		 animation: floatText 6s infinite linear;
-   	}
-   	.log:nth-child(0).reading {
-         padding-left: 100%; /*Initial offset*/
-   	}
-   	.log:nth-child(1).reading {
-         padding-left: 60%; /*Initial offset*/
-   	}
-   	.log:nth-child(2).reading {
-         padding-left: 40%; /*Initial offset*/
-   	}
+      }*/
+      .log{
+       width:100%;
+       height:100%;
+       margin:0;
+       padding:20px;
+     }
+     .role {
+       position:relative;
+       height:33%;
+       /*background-color: rgba(255,255,255,.2);*/ /*debug*/
+       /*border:black solid 1px;*//*debug*/
+       /*text*/
+       font-size: 300;
+       vertical-align: middle;
+       color:white;
+       display: inline-block;
+       white-space: nowrap;
+     }
+     #danish .role {
+       margin:280px 0;
+     }
+     #international, #danish{
+       font-family: 'Lato', sans-serif;
+       font-style: bold;
+     }
+     #english {
+       font-family:'DINCond', sans-serif;
+       letter-spacing: 1px;
+     }
+     .log {
+       display:none;
+     }
+     .reading{
+      /*TODO: speed match reading?*/
+      animation: floatText 6s infinite linear;
+    }
+    .log:nth-child(0).reading {
+     padding-left: 100%; /*Initial offset*/
+   }
+   .log:nth-child(1).reading {
+     padding-left: 60%; /*Initial offset*/
+   }
+   .log:nth-child(2).reading {
+     padding-left: 40%; /*Initial offset*/
+   }
 
-	@keyframes floatText {
-	  to {
-	    transform: translateX(-50%);
-	  }
-	}
+   @keyframes floatText {
+     to {
+       transform: translateX(-50%);
+     }
+   }
 
-   </style>
+ </style>
 </head>
 <body>
-    <div class="wrap">
-     <div class="log" id="danish">
-         
-      <div class="role reading">
-      	Den tomme øremaskine
-      </div>
-     </div>
-     <div class="log" id="english">
-         
-     <div class="role reading">The empty Ear Machine</div>
-      <div class="role reading">The empty row machine</div>
-       <div class="role reading">I am the Machine</div>		
-     </div>
-     <div class="log" id="international">
-          <div class="role reading">何で来て夢を</div>
-           <div class="role reading">इस राजनीति में हूं</div>
-            <div class="role reading">et c'est la dictée numéro 1</div>
+  <div class="wrap">
+   <div class="log" id="danish">
 
-     </div>
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
+    <div class="role reading">
+     Den tomme øremaskine
+   </div>
+ </div>
+ <div class="log" id="english">
+
+   <div class="role reading">The empty Ear Machine</div>
+   <div class="role reading">The empty row machine</div>
+   <div class="role reading">I am the Machine</div>		
+ </div>
+ <div class="log" id="international">
+  <div class="role reading">何で来て夢を</div>
+  <div class="role reading">इस राजनीति में हूं</div>
+  <div class="role reading">et c'est la dictée numéro 1</div>
+
+</div>
+</div>
+<script type="text/javascript">
+ function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+ }
+
+$(document).ready(function() {
+
         	// get the variable role ?role=danish/english/international
             // only show the corresponding log div
-
+            var earName = getParameterByName('role')
+            $('#'+ earName + '').show()
             var url = "http://" + document.domain + ":" + location.port;
             var socket = io.connect(url);
             socket.on('msg', function(msg) {
-                console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
+              console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
             });
-        });
-    </script>
-</body>
-</html>
+          });
+        </script>
+      </body>
+      </html>

@@ -8,12 +8,13 @@ import json
 
 voiceDict = {}
 
-IP_ADRESS = '192.168.160.109'
+IP_ADRESS = '192.168.0.20.'
 PORT = '8080'
 
 mode = "International"
 if len(sys.argv) > 1:
     mode = sys.argv[1]
+
 # python subEar English
 # python subEar Dannish
 # python subEar International

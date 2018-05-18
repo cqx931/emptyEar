@@ -1,0 +1,8 @@
+pyttsx3
+pyobjc
+pyAudio
+gevent
+gevent-websocket
+speech_recognition
+flask
+flask-socketio

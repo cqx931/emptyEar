@@ -1,48 +1,39 @@
 ####The Empty Ear Machine
 
-v1
-### One Ear
-`python ear_demo.py`
-### Run magi version
 
-
-v2
-### Main Ear - d
-### Sub_ear_e, Sub_ear_i
-
-### Turn on web sharing
-http://osxdaily.com/2012/09/07/start-web-sharing-os-x-mountain-lion-easy/
-
-Testing schedule
-1. web sharing
-2. installing voices
+### Installation
+1. installing voices
+Speech
 (Main machine: Danish; E- English; O - Other)
-3. installing necessary packages
+
+2. installing necessary packages
 `python --version`
 Make sure it is python 3
 
 `sudo easy_install pip`
 
-`pip install --user pipenv`
+`pip3 install --user pipenv`
 http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
-pip install pyttsx3
+packages in requirements.txt
 
--> Main only
-pip install speech_recognition
+brew install portaudio
+pip3 install --upgrade google-api-python-client
 
-4.Get the project folder
+3.Get the project folder
 git clone https://github.com/cqx931/emptyEar
 
------------------------
-TO DO Friday
-1. SubMachine settings pdf
-2. terminal utf8???
+### Setup process
+Master Machine
+1. Check the ip -> change all three files
+1. Open IP:8080 in chrome browser without address bar
+1. Run the server
+1. Run mainEar.py on the same machine
 
-$ locale
-export LANG=en_US.UTF-8 
--------------------
+Slave Machine I.
+1. Open IP:8080 in chrome browser without address bar
+1. Run `python subEar Dannish` 
 
-To Fix
-- Timing - Wait
-- Default voice, record
+Slave Machine II.
+1. Open IP:8080 in chrome browser without address bar
+1. Run `python subEar English`
