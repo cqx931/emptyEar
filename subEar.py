@@ -8,7 +8,7 @@ import json
 
 voiceDict = {}
 
-IP_ADRESS = '192.168.204.138'
+IP_ADRESS = '192.168.160.109'
 PORT = '8080'
 
 mode = "International"

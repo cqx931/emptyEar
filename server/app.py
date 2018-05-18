@@ -18,7 +18,7 @@ import json
 # ipconfig getifaddr en1
 # library 192.168.204.150
 
-IP_ADRESS = '192.168.204.138'
+IP_ADRESS = '192.168.160.109'
 PORT = 8080
 
 class toReadList():
@@ -83,6 +83,10 @@ socketio = SocketIO(app)
 @app.route("/")
 def hello():
     return render_template('main.html')
+
+@app.route("/projector")
+def hello():
+    return render_template('p5.html')
 #########################
 @socketio.on('connect')
 def ws_conn():
