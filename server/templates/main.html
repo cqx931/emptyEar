@@ -14,7 +14,7 @@
             var url = "http://" + document.domain + ":" + location.port;
             var socket = io.connect(url);
             socket.on('msg', function(msg) {
-                $("#log").html("<p>" + msg["action"] + ":" + msg["text"] + " " + msg["language"] + "</p>");
+                $("#log").append("<p>" + msg["action"] + ":" + msg["text"] + " " + msg["language"] + "</p>");
             });
         });
     </script>
