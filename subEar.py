@@ -7,6 +7,10 @@ import json
 # httplib for python2, http.client for python3
 
 voiceDict = {}
+
+IP_ADRESS = '192.168.0.21'
+PORT = '8080'
+
 mode = "International"
 if len(sys.argv) > 1:
     mode = sys.argv[1]
@@ -64,18 +68,12 @@ engine = init_engine()
 filterVoices()
 
 # Change IP here
-c = http.client.HTTPConnection('192.168.0.21', 80)
+c = http.client.HTTPConnection(IP_ADRESS, PORT)
 
 while True:
     c.request('GET', '/API/' + mode)
-    try:
-        data = c.getresponse().read()
-    except ValueError:
-        print("No response")
-    try:
-        data = json.loads(data.decode())
-    except ValueError:
-        print("Unable to process data")
+    data = c.getresponse().read()
+    data = json.loads(data.decode())
     if data == None:
       defaultRead()
     else: 

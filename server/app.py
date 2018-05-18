@@ -74,18 +74,12 @@ app = Flask(__name__)
 db = redis.StrictRedis(IP_ADRESS, PORT, 0)
 
 #################
-@app.route('/hello')
+@app.route("/")
 def hello():
-	return "Connected to Server!"
-
-@app.route('/')
-def connect():
-	c = db.incr('counter')
-    return render_template('main.html', conter=c)
-    
+    return "Hello World!"
 
 #########################
-@app.get('/API/<name>')
+@app.route('/API/<name>', methods = ['GET']) #get
 def read_handler(name):
     '''Handles reads'''
     try:
@@ -103,7 +97,7 @@ def read_handler(name):
 
 #
 
-@app.post('/API')
+@app.route('/API', methods = ['POST']) #post
 def creation_handler():
     try:
         # parse input data      
@@ -146,5 +140,5 @@ def creation_handler():
 #########################
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(host=IP_ADRESS, port=PORT, debug=True)
 #########################
