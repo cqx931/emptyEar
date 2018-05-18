@@ -142,6 +142,6 @@ def echo(ws):
         
 #########################
 
-run(app, host=IP_ADRESS, port=80, server=GeventWebSocketServer)
+run(app, host=IP_ADRESS, port=8080, server=GeventWebSocketServer)
 
 #########################
