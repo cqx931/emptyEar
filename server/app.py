@@ -18,7 +18,7 @@ import json
 # ipconfig getifaddr en1
 # library 192.168.204.150
 
-IP_ADRESS = '192.168.204.138'
+IP_ADRESS = '192.168.160.109'
 PORT = 8080
 
 class toReadList():
