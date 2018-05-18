@@ -1,0 +1,2 @@
+https://github.com/cqx931/emptyEar/raw/socket_visual/server/DINCond-Bold.woff
+https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg
