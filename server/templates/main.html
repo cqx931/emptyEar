@@ -131,23 +131,23 @@ opacity: 0;
 
 </div>
 <div class="screen log" id="master">
-<div class="role reading 1 english">The empty Ear Machine</div>
-<div class="role reading 1 danish">
+<div class="role reading A english">The empty Ear Machine</div>
+<div class="role reading A danish">
 Den tomme øremaskine
 </div>
-<div class="role reading 2 english">I am the Machine</div>  
+<div class="role reading B english">I am the Machine</div>  
 </div>
 
 <div class="screen log" id="internationalB">
-<div class="role reading international 1">何で来て夢を</div>
-<div class="role reading international 2">इस राजनीति में हूं</div>
-<div class="role reading international 3">et c'est la dictée numéro 1</div>
+<div class="role reading international A">何で来て夢を</div>
+<div class="role reading international B">इस राजनीति में हूं</div>
+<div class="role reading international C">et c'est la dictée numéro 1</div>
 
 </div>
 <div class="screen log" id="internationalA">
-<div class="role reading international 1">何で来て夢を</div>
-<div class="role reading international 2">इस राजनीति में हूं</div>
-<div class="role reading international 3">et c'est la dictée numéro 1</div>
+<div class="role reading international A">何で来て夢を</div>
+<div class="role reading international B">इस राजनीति में हूं</div>
+<div class="role reading international C">et c'est la dictée numéro 1</div>
 
 </div>
 </div>
@@ -160,6 +160,12 @@ results = regex.exec(url);
 if (!results) return null;
 if (!results[2]) return '';
 return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function fromNumToLetter(n){
+  if(n===1) return "A";
+  else if(n===2) return "B"
+  else if (n===3) return "C"
 }
 
 $(document).ready(function() {
@@ -182,7 +188,7 @@ if (typeof io != 'undefined') {
             
             // which
             var reader = msg["reader"].toLowerCase().substring(0,  msg["reader"].length - 1);
-            var role = msg["reader"].slice(-1);
+            var role = fromNumToLetter(msg["reader"].slice(-1));
             console.log(msg["action"] + "]" + reader + " " + role +":"+ msg["text"] + " " + msg["language"] )
             var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role + ')')
 
