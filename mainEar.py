@@ -144,7 +144,7 @@ def batchRequestGoogleCloud(audio, target, limit):
         threads[idx].start()
         idx = idx + 1
 
-    for i in range(len(threads)):
+    for i in range(len(subArray)):
         threads[i].join()
     
      # time.sleep(3)
