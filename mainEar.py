@@ -192,7 +192,7 @@ r = MySR()
 # Change Server IP
 
 ready = requests.get(HELLOURL)
-data = ready.json
+data = ready.content
 # while not ready:
 #     ready = requests.get(POSTURL)
 #     time.sleep(3)

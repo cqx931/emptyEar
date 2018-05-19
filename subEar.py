@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-import http.client
-# httplib for python2, http.client for python3
+import requests
 
 import pyttsx3
 
@@ -18,6 +17,7 @@ mode = "International1"
 if len(sys.argv) > 1:
     mode = sys.argv[1]
 
+GETURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API/' + mode
 # python subEar english1/2/3
 # python subEar dannish
 # python subEar international
@@ -71,15 +71,11 @@ print("init tts")
 engine = init_engine()
 filterVoices()
 
-# Change IP here
-c = http.client.HTTPConnection(IP_ADDRESS, PORT)
 
 while True:
-    c.request('GET', 'API/' + mode)
-    data = c.getresponse().read()
+    r = requests.get(GETURL)
+    data = json.loads(r.content)
     print(data)
-    data = json.loads(data)
-
     if data["text"] == None and data["language"] == None:
         # Empty list
         # TODO
