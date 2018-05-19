@@ -190,7 +190,7 @@ if (typeof io != 'undefined') {
             var reader = msg["reader"].toLowerCase().substring(0,  msg["reader"].length - 1);
             var role = fromNumToLetter(msg["reader"].slice(-1));
             console.log(msg["action"] + "]" + reader + " " + role +":"+ msg["text"] + " " + msg["language"] )
-            var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role + ')')
+            var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role)
 
 
             ele.html(msg["text"]).addClass("reading");
