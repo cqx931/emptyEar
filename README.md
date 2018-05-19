@@ -27,14 +27,8 @@ git clone https://github.com/cqx931/emptyEar
 Master Machine
 1. Check the ip -> change all three files
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
-1. Run the server `python server/app.py`
-1. Run `python mainEar.py` on the same machine
-1. Run `python subEar danish` 
+1. Run the server `sh mainMachine.bash`
 
-Slave Machine I.
+Slave Machine I.II
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
-1. Run `python subEar international` 
-
-Slave Machine II.
-1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
-1. Run `python subEar english`
+1. Run `sh intMachine.bash` 
