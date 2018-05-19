@@ -178,7 +178,7 @@ if (typeof io != 'undefined') {
             console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
 
             // which
-            var reader = msg["reader"].lower().slice(msg["reader"].length-1);
+            var reader = msg["reader"].lowercase().slice(msg["reader"].length-1);
             var role = msg["reader"].slice(-1);
 
             $('#'+ reader + ':nth-child(' + role + ')').html(msg["text"]);
