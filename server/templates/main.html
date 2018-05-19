@@ -186,19 +186,25 @@ if (typeof io != 'undefined') {
             $('.waiting').hide()
             $('.listening').hide()
             $('#'+ earName + '').show()
-            
-            // which
-            var reader = msg["reader"].toLowerCase().substring(0,  msg["reader"].length - 1);
-            var role = fromNumToLetter(msg["reader"].slice(-1));
+      
+            // which:  international, international, master
+            var reader = msg["reader"].toLowerCase().substring(0,  msg["reader"].length - 1); //remove role
+           
+            if(reader.indexOf("international") > -1) reader = "international"
+
+            var role = fromNumToLetter(msg["reader"].slice(-1)); //1/2/3
             console.log(msg["action"] + "]" + reader + " " + role +":"+ msg["text"] + " " + msg["language"] )
             var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role)
-
-
-            ele.html(msg["text"]).addClass("reading");
+            
+              // #internationalA .internatioanl.A
+            
+            ele.text(msg["text"]).
+            ele.addClass("reading");
             // 3s remove reading
             setTimeout(function() {
                 ele.removeClass("reading");
             }, 3000, ele)
+
             break;
 
         case "Listen":

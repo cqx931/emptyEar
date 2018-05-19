@@ -29,6 +29,7 @@ LISTENURL = 'http://' + IP_ADDRESS + ':' + PORT + '/listen'
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))
 LANGUAGE_CODE_FILE = "data/languageCode.txt"
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "data/title.wav")
+DEFAULT_AUDIO_FILES = ["data/english.wav"]
 # AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "chinese.flac")
 # AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "english.wav")
 

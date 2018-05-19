@@ -13,7 +13,7 @@ voiceDict = {}
 IP_ADDRESS = '192.168.160.109'
 PORT = '8080'
 
-mode = "International1"
+mode = "internationalA1"
 if len(sys.argv) > 1:
     mode = sys.argv[1]
 

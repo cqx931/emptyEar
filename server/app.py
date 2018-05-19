@@ -41,12 +41,12 @@ class toReadList():
             message = d["English"][randint(0, len(d["English"]))]
         elif category == "danish" and len(d["Danish"]) > 0:
             message = d["Danish"][0]
-        elif len(d["International"]) > 0:
+        elif category == "international" and len(d["International"]) > 0:
             message = d["International"][0]
             d["International"] = d["International"][1: ]# remove the entry
             #control the reading thread
         ## END IF ###
-        print("[Read]", category, message)
+        print("[Read]", category, message,category == "international", len(d["International"]))
         return message;
 
     def clear(self):
@@ -140,8 +140,10 @@ def read_handler(name):
         'language': None
     }))
     emptyListResponse.headers['Content-Type'] = 'application/json'
-    
-    category = name[:-1]
+    category = name.lower()
+    category = category[:-1]
+    if category.startswith("international"):
+        category = "international"
     try:
         readed = _toRead.read(category)
     except ValueError: 

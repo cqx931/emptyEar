@@ -7,7 +7,7 @@ cmd5="cd emptyear && python3 subEar.py english2"
 osascript -e "tell application \"Terminal\" to do script \"$cmd1\""
 sleep 5s
 osascript -e "tell application \"Terminal\" to do script \"$cmd2\""
-sleep 5s
+sleep 10s
 osascript -e "tell application \"Terminal\" to do script \"$cmd3\""
 osascript -e "tell application \"Terminal\" to do script \"$cmd4\""
 osascript -e "tell application \"Terminal\" to do script \"$cmd5\""
