@@ -139,6 +139,7 @@ def batchRequestGoogleCloud(audio, target, limit):
     idx = 0
 
     for lg in subArray:
+        print(lg)
         threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
         threads[idx].start()
         idx = idx + 1
