@@ -29,11 +29,12 @@ Master Machine
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
 1. Run the server `python server/app.py`
 1. Run `python mainEar.py` on the same machine
+1. Run `python subEar danish` 
 
 Slave Machine I.
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
-1. Run `python subEar Dannish` 
+1. Run `python subEar international` 
 
 Slave Machine II.
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
-1. Run `python subEar English`
+1. Run `python subEar english`

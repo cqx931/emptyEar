@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
-import sys
-import pyttsx3
-import random
-import http.client, subprocess
-import json
+import http.client
 # httplib for python2, http.client for python3
+
+import pyttsx3
+
+import sys
+import random
+import json
+import time
 
 voiceDict = {}
 
-IP_ADRESS = '192.168.0.20.'
+IP_ADDRESS = '192.168.0.21'
 PORT = '8080'
 
-mode = "International"
+mode = "International1"
 if len(sys.argv) > 1:
     mode = sys.argv[1]
 
-# python subEar English
-# python subEar Dannish
-# python subEar International
+# python subEar english1/2/3
+# python subEar dannish
+# python subEar international
 
 #####################
 def init_engine():
@@ -69,13 +72,14 @@ engine = init_engine()
 filterVoices()
 
 # Change IP here
-c = http.client.HTTPConnection(IP_ADRESS, PORT)
+c = http.client.HTTPConnection(IP_ADDRESS, PORT)
 
 while True:
-    c.request('GET', '/API/' + mode)
+    c.request('GET', 'API/' + mode)
     data = c.getresponse().read()
     print(data)
     data = json.loads(data)
+
     if data["text"] == None and data["language"] == None:
         # Empty list
         # TODO

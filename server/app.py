@@ -13,7 +13,7 @@ import json
 # ipconfig getifaddr en1
 # admin: ve06dd
 
-IP_ADRESS = '192.168.0.20'
+IP_ADRESS = '192.168.0.21'
 PORT = 8080
 
 class toReadList():
@@ -134,9 +134,10 @@ def read_handler(name):
         'language': None
     }))
     emptyListResponse.headers['Content-Type'] = 'application/json'
-
+    
+    category = name[:-1]
     try:
-        readed = _toRead.read(name)
+        readed = _toRead.read(category)
     except ValueError: 
     #None if the list is empty
         return emptyListResponse
@@ -153,6 +154,7 @@ def read_handler(name):
     # Push to socket
     socketio.emit('msg', {
         "action": "Read",
+        "reader": name,
         "text": readed.text,
         "language": readed.language
     })

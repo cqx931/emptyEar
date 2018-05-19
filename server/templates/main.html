@@ -1,163 +1,203 @@
 <html>
 <head>
-  <title>The Empty Eear Machine</title>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  <style type="text/css">
+<title>The Empty Eear Machine</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<style type="text/css">
 
-  @font-face {
-   font-family: 'DINCond';
-   src: url('https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg') format('woff');
-   font-weight: bold;
-   font-style: normal;
- }
+@font-face {
+font-family: 'DINCond';
+src: url('https://github.com/cqx931/emptyEar/raw/socket_visual/server/bg.jpg') format('woff');
+font-weight: bold;
+font-style: normal;
+}
 
- body {
-   background-image:url('https://github.com/cqx931/emptyEar/raw/master/data/bg.jpg');
-   background-position: cover;
-   user-select:none;
-   overflow:none;
-   width:100%;
-   height:100%;
-   		/*position: fixed;  //finalize
-	    top: 0;
-	    left: 0;
-	    bottom:0;*/
-    }
-   	/*.wrap{
-   		width:100%;
-   		height:100%;
-   		overflow-y: scroll;
-   		padding-right: 17px;
-   		box-sizing:content-box;
-      }*/
-      .screen{
-       width:96%;
-       height:96%;
-       margin:0;
-       padding:2%;
-      }
-      .log {
+body {
+background-image:url('https://github.com/cqx931/emptyEar/raw/master/data/bg.jpg');
+background-position: cover;
+user-select:none;
+overflow:none;
+width:100%;
+height:100%;
+/*position: fixed;  //finalize
+top: 0;
+left: 0;
+bottom:0;*/
+}
+/*.wrap{
+width:100%;
+height:100%;
+overflow-y: scroll;
+padding-right: 17px;
+box-sizing:content-box;
+}*/
+.screen{
+position:absolute;
+width:96%;
+height:96%;
+margin:0;
+padding:2%;
+}
+.log {
 
-      }
-      .waiting, .listening {
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-      }
-      .waiting {
-        background-size: contain;
-        
-      }
-      .listening {
- 
-        display: none;
-      }
-     .role {
-       position:relative;
-       height:33%;
-       /*background-color: rgba(255,255,255,.2);*/ /*debug*/
-       /*border:black solid 1px;*//*debug*/
-       /*text*/
-       font-size: 300;
-       vertical-align: middle;
-       color:white;
-       display: inline-block;
-       white-space: nowrap;
-     }
-     #danish .role {
-       margin:280px 0;
-     }
-     #international, #danish{
-       font-family: 'Lato', sans-serif;
-       font-style: bold;
-     }
-     #english {
-       font-family:'DINCond', sans-serif;
-       letter-spacing: 1px;
-     }
-     .log {
-       display:none;
-     }
-     .reading{
-      /*TODO: speed match reading?*/
-      animation: floatText 6s infinite linear;
-    }
-    .log:nth-child(0).reading {
-     padding-left: 100%; /*Initial offset*/
-   }
-   .log:nth-child(1).reading {
-     padding-left: 60%; /*Initial offset*/
-   }
-   .log:nth-child(2).reading {
-     padding-left: 40%; /*Initial offset*/
-   }
+}
+.waiting, .listening {
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-position: center;
+}
+.waiting {
+/*display: none;*/
+background-size: 600px;
+background-image:url('https://raw.githubusercontent.com/cqx931/emptyEar/master/data/icon.png');
+}
+.listening {
+background-image:url('https://raw.githubusercontent.com/cqx931/emptyEar/master/data/listen.png');
+background-size: 400px;
+/*display: none;*/
+}
+.role {
+position:relative;
+height:33%;
+/*background-color: rgba(255,255,255,.2);*/ /*debug*/
+/*border:black solid 1px;*//*debug*/
+/*text*/
+font-size: 300;
+vertical-align: middle;
+color:white;
+display: inline-block;
+white-space: nowrap;
+}
+#danish .role {
+margin:280px 0;
+}
+#international, #danish{
+font-family: 'Lato', sans-serif;
+font-style: bold;
+}
+#english {
+font-family:'DINCond', sans-serif;
+letter-spacing: 1px;
+}
+.log {
+display:none;
+}
+.reading{
+/*TODO: speed match reading?*/
+animation: floatText 6s infinite linear;
+}
+.log:nth-child(0).reading {
+padding-left: 100%; /*Initial offset*/
+}
+.log:nth-child(1).reading {
+padding-left: 60%; /*Initial offset*/
+}
+.log:nth-child(2).reading {
+padding-left: 40%; /*Initial offset*/
+}
 
-   @keyframes floatText {
-     to {
-       transform: translateX(-50%);
-     }
-   }
+@keyframes floatText {
+to {
+transform: translateX(-50%);
+}
+}
+.fade {
+animation: fade 3s cubic-bezier(.5, 0, 1, 1) infinite;
+}
+.blink {
+animation: blinker 2s linear infinite;
+}
 
- </style>
+@keyframes fade {
+50% {
+opacity: 0.3;
+}
+}
+@keyframes blinker {
+50% {
+opacity: 0;
+}
+}
+
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="screen waiting">
-      <svg width="5cm" height="4cm" version="1.1"
-     xmlns="https://raw.githubusercontent.com/cqx931/emptyEar/master/data/EmptyEar.svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      
-    </div>
-     <div class="screen listening ">
-      <svg width="5cm" height="4cm" version="1.1"
-     xmlns="https://raw.githubusercontent.com/cqx931/emptyEar/master/data/listening.svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    </div>
-   <div class="screen log" id="danish">
+<div class="wrap">
+<div class="screen waiting fade">
 
-    <div class="role reading">
-     Den tomme øremaskine
-   </div>
- </div>
- <div class="screen log" id="english">
+</div>
+<div class="screen listening blink">
 
-   <div class="role reading">The empty Ear Machine</div>
-   <div class="role reading">The empty row machine</div>
-   <div class="role reading">I am the Machine</div>		
- </div>
- <div class="screen log" id="international">
-  <div class="role reading">何で来て夢を</div>
-  <div class="role reading">इस राजनीति में हूं</div>
-  <div class="role reading">et c'est la dictée numéro 1</div>
+</div>
+<div class="screen log" id="danish">
+
+<div class="role reading">
+Den tomme øremaskine
+</div>
+</div>
+<div class="screen log" id="english">
+
+<div class="role reading">The empty Ear Machine</div>
+<div class="role reading">The empty row machine</div>
+<div class="role reading">I am the Machine</div>		
+</div>
+<div class="screen log" id="international">
+<div class="role reading">何で来て夢を</div>
+<div class="role reading">इस राजनीति में हूं</div>
+<div class="role reading">et c'est la dictée numéro 1</div>
 
 </div>
 </div>
 <script type="text/javascript">
- function getParameterByName(name, url) {
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-  results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
- }
+function getParameterByName(name, url) {
+if (!url) url = window.location.href;
+name = name.replace(/[\[\]]/g, "\\$&");
+var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+results = regex.exec(url);
+if (!results) return null;
+if (!results[2]) return '';
+return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
 $(document).ready(function() {
 
-        	// get the variable role ?role=danish/english/international
-            // only show the corresponding log div
-            var earName = getParameterByName('role')
-            $('#'+ earName + '').show()
-            var url = "http://" + document.domain + ":" + location.port;
-            if (typeof io != 'undefined') {
-              var socket = io.connect(url);
-              socket.on('msg', function(msg) {
-                console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
-              });
-            }
-            
-          });
-        </script>
-      </body>
-      </html>
+// get the variable role ?role=danish/english/international
+// only show the corresponding log div
+var earName = getParameterByName('role')
+$('#'+ earName + '').show()
+
+var url = "http://" + document.domain + ":" + location.port;
+if (typeof io != 'undefined') {
+  var socket = io.connect(url);
+  socket.on('msg', function(msg) {
+    if (msg["action"] != undefined) {
+
+      switch(msg["action"]) {
+        case "Read":
+            console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
+
+            // which
+            var reader = msg["reader"].lower().slice(msg["reader"].length-1);
+            var role = msg["reader"].slice(-1);
+
+            $('#'+ reader + ':nth-child(' + role + ')').html(msg["text"]);
+            break;
+        case "Listen":
+           console.log(msg["action"]);
+            $('.screen').hide()
+            $('.listening').show()
+            break;
+        default:
+            //
+     }
+      
+    }
+    
+  });
+}
+
+});
+</script>
+</body>
+</html>

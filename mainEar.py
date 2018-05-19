@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 # Network related
-from bottle import route, Bottle, run
 import requests
-import httplib, urllib
 
 # General library
 import json
@@ -21,9 +19,11 @@ import speech_recognition as sr
 # Settings
 dbug = True
 LAN_LIMIT = 20
-IP_ADDRESS = '192.168.0.20'
+IP_ADDRESS = '192.168.0.21'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
+HELLOURL = 'http://' + IP_ADDRESS + ':' + PORT + '/hello'
+
 
 # Files
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))
@@ -118,7 +118,6 @@ def recGoogleCloud(audio, lg, results=None):
         # Broadcast to server
         headers = {'Content-type': 'application/json'}
         requests.post(POSTURL, data=json.dumps(item), headers=headers)
-        quit()
         return result;
     except sr.UnknownValueError:
         pt("Google Cloud Speech could not understand audio " + lg)
@@ -143,6 +142,8 @@ def batchRequestGoogleCloud(audio, target, limit):
         threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
         threads[idx].start()
         idx = idx + 1
+     
+    time.sleep(3)
 
     # do some other stuff
     for i in range(len(threads)):
@@ -189,10 +190,12 @@ print("...initializing...")
 r = MySR()
 # Initialize server
 # Change Server IP
-c = httplib.HTTPConnection(IP_ADDRESS, 80)
-c.request('GET', '/')
-data = c.getresponse().read()
-print(data)
+
+ready = requests.get(HELLOURL)
+data = ready.json
+# while not ready:
+#     ready = requests.get(POSTURL)
+#     time.sleep(3)
 
 # Load language list
 loadLanguages()
@@ -201,6 +204,7 @@ pt("Speech recognition with " + str(len(LANGUAGES)) + " Languages")
 # Load the sample audio file
 with sr.AudioFile(AUDIO_FILE) as source:
     sampleAudio = r.record(source)  
+
 
 # shared Global variables
 toRead = []
