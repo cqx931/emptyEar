@@ -136,37 +136,37 @@ def recGoogleCloud(audio, lg, results=None):
 
 def batchRequestGoogleCloud(audio, target, limit):
     
-    for lg in target:
-        recGoogleCloud(audio,lg)
+    # for lg in target:
+    #     recGoogleCloud(audio,lg)
 
-    # for lg in subArray:
-    #     print(lg)
-    #     threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
-    #     threads[idx].start()
-    #     idx = idx + 1
+    for lg in subArray:
+        print(lg)
+        threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
+        threads[idx].start()
+        idx = idx + 1
 
-    # for i in range(len(subArray)):
-    #     threads[i].join()
+    for i in range(len(subArray)):
+        threads[i].join()
     
-    #  # time.sleep(3)
+     # time.sleep(3)
 
     
-    # subArray = target[limit:]
+    subArray = target[limit:]
     
-    # if len(subArray) < 0:
-    #     return
+    if len(subArray) < 0:
+        return
     
-    # # deal with the other half
+    # deal with the other half
 
-    # for lg in subArray:
-    #     print(lg)
-    #     threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
-    #     threads[idx].start()
-    #     idx = idx + 1
+    for lg in subArray:
+        print(lg)
+        threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
+        threads[idx].start()
+        idx = idx + 1
      
-    # # do some other stuff
-    # for i in range(len(subArray)):
-    #     threads[i].join()
+    # do some other stuff
+    for i in range(len(subArray)):
+        threads[i].join()
 
     return;
 
