@@ -36,17 +36,19 @@ class toReadList():
     def read(self, category):
         message = None
         d = self.dict
-        if category == "English" and len(d["English"]) > 1:
+        print(category);
+        if category == "english" and len(d["English"]) > 0:
             message = d["English"][0]
             d["English"] = d["English"][1: ]# remove the entry
-        elif category == "Danish" and len(d["Danish"]) > 1:
+        elif category == "danish" and len(d["Danish"]) > 0:
             message = d["Danish"][0]
-            d["Danish"] = d["Danish"][1: ]# remove the entry
-        elif category == "International" and len(d["International"]) > 1:
+        elif category == "international" and len(d["International"]) > 0:
             message = d["International"][0]
-            d["International"] = d["International"][1: ]
-            print("Read", category, message)# remove the entry
-            return message;
+            d["International"] = d["International"][1: ]# remove the entry
+        ## END IF ###
+        print("[Read]", category, message)
+        return message;
+
     def clear(self):
         self.dict = {
             "English": [],
