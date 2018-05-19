@@ -175,12 +175,14 @@ if (typeof io != 'undefined') {
 
       switch(msg["action"]) {
         case "Read":
+
             console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
 
             // which
-            var reader = msg["reader"].lowercase().slice(msg["reader"].length-1);
+            var reader = msg["reader"].toLowerCase().slice(msg["reader"].length-1);
             var role = msg["reader"].slice(-1);
-
+            $('.screen').hide()
+            $('#' + reader).show()
             $('#'+ reader + ':nth-child(' + role + ')').html(msg["text"]);
             break;
         case "Listen":
@@ -189,7 +191,6 @@ if (typeof io != 'undefined') {
             $('.listening').show()
             break;
         default:
-            //
      }
       
     }
