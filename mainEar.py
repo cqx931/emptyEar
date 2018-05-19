@@ -121,11 +121,11 @@ def recGoogleCloud(audio, lg, results=None):
         return result;
     except sr.UnknownValueError:
         pt("Google Cloud Speech could not understand audio " + lg)
-        if "en" in lg :
-            # If it is English, Try sphinx 
-            pt("Try Sphinx")
-            return recSphinx(audio)
-        else:
+        # if "en" in lg :
+        #     # If it is English, Try sphinx 
+        #     pt("Try Sphinx")
+        #     return recSphinx(audio)
+        # else:
             return "";
     except sr.RequestError as e:
         pt("Could not request results from Google Cloud Speech service; {0}".format(e))
