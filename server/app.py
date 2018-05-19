@@ -13,7 +13,7 @@ from random import randint
 # ipconfig getifaddr en1
 # admin: ve06dd
 
-IP_ADRESS = '192.168.0.20'
+IP_ADRESS = '192.168.160.109'
 PORT = 8080
 
 class toReadList():
