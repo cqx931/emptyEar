@@ -19,7 +19,7 @@ import speech_recognition as sr
 # Settings
 dbug = True
 LAN_LIMIT = 15
-IP_ADDRESS = '192.168.0.21'
+IP_ADDRESS = '192.168.0.20'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
 HELLOURL = 'http://' + IP_ADDRESS + ':' + PORT + '/hello'
@@ -40,6 +40,7 @@ DANISH = ["da-DK","da-DK","da-DK","da-DK","da-DK","da-DK"]
 OTHERS = []
 EARS = [ENGLISHES, DANISH, OTHERS]
 
+
 # Main functions
 ######################################
 # Overwrite the Recognizer class
@@ -58,6 +59,7 @@ class sttResult(object):
     def __init__(self, text, language):
         self.text = text
         self.language = language
+SENTINEL = "SENTINEL"
 
 def loadLanguages():
   with open(LANGUAGE_CODE_FILE , 'r') as myfile:
@@ -71,6 +73,7 @@ def loadLanguages():
         else:
             OTHERS.append(s)
   return;
+
 
 def recSphinx(audio):
     # recognize speech using Sphinx: in case internet is not working
@@ -132,40 +135,38 @@ def recGoogleCloud(audio, lg, results=None):
         return "";
 
 def batchRequestGoogleCloud(audio, target, limit):
-    # TODO: Sequence
     
-    subArray = target[0:limit+1]
-    threads = [None] * len(target)
-    idx = 0
+    for lg in target:
+        recGoogleCloud(audio,lg)
 
-    for lg in subArray:
-        print(lg)
-        threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
-        threads[idx].start()
-        idx = idx + 1
+    # for lg in subArray:
+    #     print(lg)
+    #     threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
+    #     threads[idx].start()
+    #     idx = idx + 1
 
-    for i in range(len(subArray)):
-        threads[i].join()
+    # for i in range(len(subArray)):
+    #     threads[i].join()
     
-     # time.sleep(3)
+    #  # time.sleep(3)
 
     
-    subArray = target[limit:]
+    # subArray = target[limit:]
     
-    if len(subArray) < 0:
-        return
+    # if len(subArray) < 0:
+    #     return
     
-    # deal with the other half
+    # # deal with the other half
 
-    for lg in subArray:
-        print(lg)
-        threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
-        threads[idx].start()
-        idx = idx + 1
+    # for lg in subArray:
+    #     print(lg)
+    #     threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
+    #     threads[idx].start()
+    #     idx = idx + 1
      
-    # do some other stuff
-    for i in range(len(subArray)):
-        threads[i].join()
+    # # do some other stuff
+    # for i in range(len(subArray)):
+    #     threads[i].join()
 
     return;
 

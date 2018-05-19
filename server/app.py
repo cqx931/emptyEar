@@ -13,7 +13,7 @@ from random import randint
 # ipconfig getifaddr en1
 # admin: ve06dd
 
-IP_ADRESS = '192.168.0.21'
+IP_ADRESS = '192.168.0.20'
 PORT = 8080
 
 class toReadList():
@@ -118,11 +118,12 @@ def hello_handler(name):
 # Listen
 # From mainEar.py -> server -> socket
 @ app.route('/listen', methods = ['GET'])# get
-def listen_handler(name):
+def listen_handler():
     # Push to socket
     socketio.emit('msg', {
         "action": "Listen"
     })
+    print('[LISTEN]')
     # clear the list
     _toRead.clear()
     #???

@@ -10,7 +10,7 @@ import time
 
 voiceDict = {}
 
-IP_ADDRESS = '192.168.0.21'
+IP_ADDRESS = '192.168.0.20'
 PORT = '8080'
 
 mode = "International1"

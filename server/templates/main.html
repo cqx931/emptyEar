@@ -72,7 +72,7 @@ white-space: nowrap;
 #danish .role {
 margin:280px 0;
 }
-.nternational, .danish{
+.international, .danish{
 font-family: 'Lato', sans-serif;
 font-style: bold;
 }
@@ -131,23 +131,22 @@ opacity: 0;
 
 </div>
 <div class="screen log" id="master">
-<div class="role reading A english">The empty Ear Machine</div>
+<div class="role reading A english"></div>
 <div class="role reading A danish">
-Den tomme øremaskine
 </div>
-<div class="role reading B english">I am the Machine</div>  
+<div class="role reading B english"></div>  
 </div>
 
 <div class="screen log" id="internationalB">
-<div class="role reading international A">何で来て夢を</div>
-<div class="role reading international B">इस राजनीति में हूं</div>
-<div class="role reading international C">et c'est la dictée numéro 1</div>
+<div class="role reading international A"></div>
+<div class="role reading international B"></div>
+<div class="role reading international C"></div>
 
 </div>
 <div class="screen log" id="internationalA">
-<div class="role reading international A">何で来て夢を</div>
-<div class="role reading international B">इस राजनीति में हूं</div>
-<div class="role reading international C">et c'est la dictée numéro 1</div>
+<div class="role reading international A"></div>
+<div class="role reading international B"></div>
+<div class="role reading international C"></div>
 
 </div>
 </div>
@@ -184,7 +183,8 @@ if (typeof io != 'undefined') {
 
       switch(msg["action"]) {
         case "Read":
-            $('#waiting').hide()
+            $('.waiting').hide()
+            $('.listening').hide()
             $('#'+ earName + '').show()
             
             // which
