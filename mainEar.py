@@ -18,7 +18,7 @@ import speech_recognition as sr
 
 # Settings
 dbug = True
-LAN_LIMIT = 20
+LAN_LIMIT = 19
 IP_ADDRESS = '192.168.0.21'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
@@ -135,7 +135,7 @@ def batchRequestGoogleCloud(audio, target, limit):
     # TODO: Sequence
     
     subArray = target[0:limit+1]
-    threads = [None] * len(subArray)
+    threads = [None] * len(target)
     idx = 0
 
     for lg in subArray:
@@ -143,17 +143,30 @@ def batchRequestGoogleCloud(audio, target, limit):
         threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
         threads[idx].start()
         idx = idx + 1
-     
-    # time.sleep(3)
 
-    # do some other stuff
     for i in range(len(threads)):
         threads[i].join()
     
-    # deal with the other half
-    subArray = target[limit:]
+     # time.sleep(3)
 
     
+    subArray = target[limit:]
+    
+    if len(subArray) < 0:
+        return
+    
+    # deal with the other half
+
+    for lg in subArray:
+        print(lg)
+        threads[idx] = Thread(target=recGoogleCloud, args=(audio, lg))
+        threads[idx].start()
+        idx = idx + 1
+     
+    # do some other stuff
+    for i in range(len(threads)):
+        threads[i].join()
+
     return;
 
 def getTTSLanguageCode(code):

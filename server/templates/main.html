@@ -177,7 +177,6 @@ if (typeof io != 'undefined') {
         case "Read":
 
             console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
-
             // which
             var reader = msg["reader"].toLowerCase().slice(msg["reader"].length-1);
             var role = msg["reader"].slice(-1);

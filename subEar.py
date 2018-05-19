@@ -88,3 +88,4 @@ while True:
       language = getTTSLanguageCode(language)
       voice = randomVoice(language)
       say(sentence)
+      time.sleep(1) 
