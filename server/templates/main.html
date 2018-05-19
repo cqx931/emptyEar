@@ -179,10 +179,11 @@ if (typeof io != 'undefined') {
       switch(msg["action"]) {
         case "Read":
             $('#'+ earName + '').show()
-            console.log(msg["action"] + ":" + msg["reader"] + " "+ msg["text"] + " " + msg["language"] )
+            
             // which
-            var reader = msg["reader"].toLowerCase().slice(msg["reader"].length-1);
+            var reader = msg["reader"].toLowerCase().slice(msg["reader"].length()-1);
             var role = msg["reader"].slice(-1);
+            console.log(msg["action"] + "]" + reader + " " + role +":"+ msg["text"] + " " + msg["language"] )
             var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role + ')')
 
 
