@@ -18,7 +18,7 @@ import speech_recognition as sr
 
 # Settings
 dbug = True
-LAN_LIMIT = 19
+LAN_LIMIT = 15
 IP_ADDRESS = '192.168.0.21'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
@@ -126,7 +126,7 @@ def recGoogleCloud(audio, lg, results=None):
         #     pt("Try Sphinx")
         #     return recSphinx(audio)
         # else:
-            return "";
+        return "";
     except sr.RequestError as e:
         pt("Could not request results from Google Cloud Speech service; {0}".format(e))
         return "";
@@ -164,7 +164,7 @@ def batchRequestGoogleCloud(audio, target, limit):
         idx = idx + 1
      
     # do some other stuff
-    for i in range(len(threads)):
+    for i in range(len(subArray)):
         threads[i].join()
 
     return;
