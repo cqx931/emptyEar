@@ -31,8 +31,8 @@ Master Machine
 
 Slave Machine I
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=http://192.168.160.109:8080?role=internationalA`
-1. Run `sh intMachine.bash` 
+1. Run `sh intMachineA.bash` 
 
 Slave Machine II
 1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=http://192.168.160.109:8080?role=internationalB`
-1. Run `sh intMachine.bash` 
+1. Run `sh intMachineB.bash` 
