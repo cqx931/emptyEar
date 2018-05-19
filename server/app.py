@@ -56,6 +56,7 @@ class toReadList():
         return
 
     def totalSize(self):
+        print(len(self.dict["English"]), len(self.dict["Danish"]), len(self.dict["International"]))
         return len(self.dict["English"]) + len(self.dict["Danish"]) + len(self.dict["International"])
 
 
