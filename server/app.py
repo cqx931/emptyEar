@@ -41,7 +41,7 @@ class toReadList():
             message = d["English"][randint(0, len(d["English"]))]
         elif category == "danish" and len(d["Danish"]) > 0:
             message = d["Danish"][0]
-        elif category == "international" and len(d["International"]) > 0:
+        elif len(d["International"]) > 0:
             message = d["International"][0]
             d["International"] = d["International"][1: ]# remove the entry
             #control the reading thread
