@@ -19,7 +19,7 @@ import speech_recognition as sr
 # Settings
 dbug = True
 LAN_LIMIT = 15
-IP_ADDRESS = '192.168.160.109'
+IP_ADDRESS = '192.168.0.20'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
 HELLOURL = 'http://' + IP_ADDRESS + ':' + PORT + '/hello'
