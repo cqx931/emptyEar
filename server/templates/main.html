@@ -195,7 +195,7 @@ if (typeof io != 'undefined') {
 
             ele.html(msg["text"]).addClass("reading");
             // 3s remove reading
-            setTimeOut(function() {
+            setTimeout(function() {
                 ele.removeClass("reading");
             }, 3000, ele)
             break;
