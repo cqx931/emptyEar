@@ -36,15 +36,15 @@ class toReadList():
     def read(self, category):
         message = None
         d = self.dict
-        print(category);
         if category == "english" and len(d["English"]) > 0:
-            message = d["English"][0]
-            d["English"] = d["English"][1: ]# remove the entry
+            # return random English
+            message = d["English"][randint(0, len(d["English"]))]
         elif category == "danish" and len(d["Danish"]) > 0:
             message = d["Danish"][0]
         elif category == "international" and len(d["International"]) > 0:
             message = d["International"][0]
             d["International"] = d["International"][1: ]# remove the entry
+            #control the reading thread
         ## END IF ###
         print("[Read]", category, message)
         return message;
@@ -57,9 +57,8 @@ class toReadList():
             }
         return
 
-    def totalSize(self):
-        print(len(self.dict["English"]), len(self.dict["Danish"]), len(self.dict["International"]))
-        return len(self.dict["English"]) + len(self.dict["Danish"]) + len(self.dict["International"])
+    def intlSize(self):
+        return len(self.dict["International"])
 
 
 class sttResult(object):
@@ -148,7 +147,7 @@ def read_handler(name):
     if not hasattr(readed, 'text'):
         return emptyListResponse
 
-    print('[READ]', readed.text, readed.language, _toRead.totalSize())
+    print('[READ]', readed.text, readed.language, _toRead.intlSize())
     resp = Response(json.dumps({
         'text': readed.text,
         'language': readed.language
@@ -191,7 +190,7 @@ def creation_handler():
     # add entry
     _toRead.append(entry)
 
-    print('[WRITTEN]', entry.text, entry.language, _toRead.totalSize())# return 200 Success
+    print('[WRITTEN]', entry.text, entry.language, _toRead.intlSize())# return 200 Success
 
     resp = Response(json.dumps({
         'text': entry.text
