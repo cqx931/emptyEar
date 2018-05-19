@@ -143,7 +143,7 @@ def batchRequestGoogleCloud(audio, target, limit):
         threads[idx].start()
         idx = idx + 1
      
-    time.sleep(3)
+    # time.sleep(3)
 
     # do some other stuff
     for i in range(len(threads)):
