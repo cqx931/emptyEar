@@ -26,9 +26,13 @@ git clone https://github.com/cqx931/emptyEar
 ### Setup process
 Master Machine
 1. Check the ip -> change all three files
-1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
+1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080?role=master`
 1. Run the server `sh mainMachine.bash`
 
-Slave Machine I.II
-1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080`
+Slave Machine I
+1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080?role=internationalA`
+1. Run `sh intMachine.bash` 
+
+Slave Machine II
+1. Open Visual client in chrome browser without address bar `/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --app=IP:8080?role=internationalB`
 1. Run `sh intMachine.bash` 

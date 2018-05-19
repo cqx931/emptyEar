@@ -23,7 +23,7 @@ IP_ADDRESS = '192.168.0.21'
 PORT = '8080'
 POSTURL = 'http://' + IP_ADDRESS + ':' + PORT + '/API'
 HELLOURL = 'http://' + IP_ADDRESS + ':' + PORT + '/hello'
-
+LISTENURL = 'http://' + IP_ADDRESS + ':' + PORT + '/listen'
 
 # Files
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(json.load(open("data/googleCloudCred.json", 'r')))
@@ -179,6 +179,9 @@ def getTTSLanguageCode(code):
 def speechRecHandler(recognizer, audio):
     # TODO: Tell the subEars to stop reading???
     pt("Audio detected, processing...")
+    # listening
+    ready = requests.get(LISTENURL)
+    # new recog
     T_recognition = Thread(target=recog,args=(audio,TARGET))
     T_recognition.start()
     return

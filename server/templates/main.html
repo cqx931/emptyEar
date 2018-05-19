@@ -130,22 +130,24 @@ opacity: 0;
 <div class="screen listening blink">
 
 </div>
-<div class="screen log" id="danish">
-
-<div class="role reading">
+<div class="screen log" id="master">
+<div class="role reading 1 english">The empty Ear Machine</div>
+<div class="role reading 1 danish">
 Den tomme øremaskine
 </div>
+<div class="role reading 2 english">I am the Machine</div>  
 </div>
-<div class="screen log" id="english">
 
-<div class="role reading">The empty Ear Machine</div>
-<div class="role reading">The empty row machine</div>
-<div class="role reading">I am the Machine</div>		
+<div class="screen log" id="internationalB">
+<div class="role reading international 1">何で来て夢を</div>
+<div class="role reading international 2">इस राजनीति में हूं</div>
+<div class="role reading international 3">et c'est la dictée numéro 1</div>
+
 </div>
-<div class="screen log" id="international">
-<div class="role reading">何で来て夢を</div>
-<div class="role reading">इस राजनीति में हूं</div>
-<div class="role reading">et c'est la dictée numéro 1</div>
+<div class="screen log" id="internationalA">
+<div class="role reading international 1">何で来て夢を</div>
+<div class="role reading international 2">इस राजनीति में हूं</div>
+<div class="role reading international 3">et c'est la dictée numéro 1</div>
 
 </div>
 </div>
@@ -167,6 +169,7 @@ $(document).ready(function() {
 var earName = getParameterByName('role')
 $('#'+ earName + '').show()
 
+
 var url = "http://" + document.domain + ":" + location.port;
 if (typeof io != 'undefined') {
   var socket = io.connect(url);
@@ -175,17 +178,24 @@ if (typeof io != 'undefined') {
 
       switch(msg["action"]) {
         case "Read":
+            $('#'+ earName + '').show()
 
             console.log(msg["action"] + ":" + msg["text"] + " " + msg["language"] )
             // which
             var reader = msg["reader"].toLowerCase().slice(msg["reader"].length-1);
             var role = msg["reader"].slice(-1);
-            $('.screen').hide()
-            $('#' + reader).show()
-            $('#'+ reader + ':nth-child(' + role + ')').html(msg["text"]);
+            var ele = $('#'+ earName +' ' + '.'+ reader + '.' + role + ')')
+
+
+            ele.html(msg["text"]).addClass("reading");
+            // 3s remove reading
+            setTimeOut(function() {
+                ele.removeClass("reading");
+            }, 3000, ele)
             break;
+
         case "Listen":
-           console.log(msg["action"]);
+            console.log(msg["action"]);
             $('.screen').hide()
             $('.listening').show()
             break;

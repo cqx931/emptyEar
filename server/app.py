@@ -123,6 +123,9 @@ def listen_handler(name):
     socketio.emit('msg', {
         "action": "Listen"
     })
+    # clear the list
+    _toRead.clear()
+    #???
     return
 
 # Read from the server
@@ -146,6 +149,14 @@ def read_handler(name):
     
     if not hasattr(readed, 'text'):
         return emptyListResponse
+    
+    # Push to socket -> Display first
+    socketio.emit('msg', {
+        "action": "Read",
+        "reader": name,
+        "text": readed.text,
+        "language": readed.language
+    })
 
     print('[READ]', readed.text, readed.language, _toRead.intlSize())
     resp = Response(json.dumps({
@@ -153,13 +164,7 @@ def read_handler(name):
         'language': readed.language
     }))
     resp.headers['Content-Type'] = 'application/json'#
-    # Push to socket
-    socketio.emit('msg', {
-        "action": "Read",
-        "reader": name,
-        "text": readed.text,
-        "language": readed.language
-    })
+
     return resp
 
 # Write to the server
