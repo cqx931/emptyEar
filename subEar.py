@@ -74,18 +74,24 @@ filterVoices()
 
 while True:
     r = requests.get(GETURL)
-    data = json.loads(r.content)
-    print(data)
-    if data["text"] == None and data["language"] == None:
+    
+    try: 
+        data = json.loads(r.content)
+        print(data)
+        if data["text"] == None and data["language"] == None:
         # Empty list
         # TODO
-      defaultRead()
-      time.sleep(1) 
-    else: 
-      sentence = data["text"]
-      language = data["language"]
-      print("Received:", sentence,language)
-      language = getTTSLanguageCode(language)
-      voice = randomVoice(language)
-      say(sentence)
-      time.sleep(1) 
+            defaultRead()
+            time.sleep(1) 
+        else: 
+            sentence = data["text"]
+            language = data["language"]
+            print("Received:", sentence,language)
+            language = getTTSLanguageCode(language)
+            voice = randomVoice(language)
+            say(sentence)
+            time.sleep(1) 
+    except:
+        ValueError
+
+   
