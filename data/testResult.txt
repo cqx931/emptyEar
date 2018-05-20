@@ -32,16 +32,13 @@ it-IT:anch'io ma sei in
 yue-Hant-HK:hello 
 en-GB:the empty ear machine 
 en-US:hello 
-da-DK:Domo arigato gozaimashita 
 en-IN:PMT machine 
 en-AU:hello 
 nl-NL:hallo 
 ko-KR:entertain 
-en-IE:domo arigato gozaimashita 
 fi-FI:Salo 
 nb-NO:uendelig maskin 
 fr-CA:allô 
-en-ZA:Domo arigatou gozaimashita 
 pt-BR:and your Machine 
 fr-FR:allô 
 ar-SA:توم و عليك القصيم شطه 
@@ -49,7 +46,6 @@ pt-PT:anti Hero Machine
 de-DE:Hallo 
 el-GR:αλλά 
 ro-RO:yann tiersen 
-cs-CZ:Domo Arigato gozaimashita 
 he-IL:הלו 
 hi-IN:हेलो 
 hu-HU:hello 
@@ -60,43 +56,34 @@ it-IT:allow
 en-GB:hello 
 da-DK:la mandria 
 da-DK:DR1 
-ja-JP:どうもありがとうございました 
 en-IN:hello 
 es-AR:anti ir machine 
 ko-KR:Hello 
 en-IE:Amal Clooney 
 es-MX:anti ir machine 
 nb-NO:Hallo 
-cmn-Hans-CN:domo arigato gozaimasu 
 en-IE:champion machine 
 pt-BR:alô 
 es-ES:DIY anti Hero machine 
-cmn-Hant-TW:朵茉麗蔻代購 
 en-ZA:MTN machine 
 pt-PT:Hello 
 sv-SE:vian tahir machine 
 ro-RO:Hallo 
-yue-Hant-HK:Domo arigato國際mars star 
 ru-RU:Алло 
 ar-SA:اين تعيشين 
 th-TH:amg arimasen 
 cs-CZ:Lamaze 
-sk-SK:Hello 
-en-US:domo arigato gozaimashita 
+sk-SK:Hello  
 es-AR:Hello 
 tr-TR:İrem de İrem her şeyin 
 ja-JP:FA 5 
 cs-CZ:Pěnčín 
 es-MX:Hello 
-en-AU:domo arigato gozaimashita 
 es-ES:Salou 
 sv-SE:Hello 
-cmn-Hans-CN:辣妈可以啊Apple 
 ja-JP:リアムペイン 
-nl-NL:Domo arigato gozaimashita 
 th-TH:Hello 
 tr-TR:Hello 
-fi-FI:Domo arigato gozaimashita 
 pl-PL:halo 
 cmn-Hans-CN:mcmc
 da-DK:the Click Festival 
