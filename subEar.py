@@ -52,12 +52,6 @@ def getTTSLanguageCode(code):
         code = code.replace("-", "_")
     return code;
 
-def defaultRead():
-    # TODO: read sentence and language from data
-    # if no answer received, read emptyMachine
-    print("default Read")
-    return
-
 def filterVoices():
     voices = engine.getProperty('voices')
     for voice in voices:
@@ -79,9 +73,7 @@ while True:
         data = json.loads(r.content)
         print(data)
         if data["text"] == None and data["language"] == None:
-        # Empty list
-        # TODO
-            defaultRead()
+
             time.sleep(1) 
         else: 
             sentence = data["text"]

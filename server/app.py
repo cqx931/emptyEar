@@ -9,12 +9,14 @@ from flask_socketio import SocketIO
 from flask import request, Response
 import json
 from random import randint
+import random
 # Subject to change according to network
 # ipconfig getifaddr en1
 # admin: ve06dd
 
 IP_ADRESS = '192.168.0.20'
 PORT = 8080
+DEFAULT_RESULT_FILE = 'data/testResult.txt'
 
 class toReadList():
     def __init__(self):
@@ -23,6 +25,7 @@ class toReadList():
             "Danish": [],
             "International": []
         }
+        self.defaultDictionary = loadDefaultResult()
 
     def append(self, item):
         if item.language == "da-DK":
@@ -36,17 +39,23 @@ class toReadList():
     def read(self, category):
         message = None
         d = self.dict
+
+        if self.totalSize() == 0:
+            self.getFromDefault()
+          
         if category == "english" and len(d["English"]) > 0:
             # return random English
             message = d["English"][randint(0, len(d["English"]))]
         elif category == "danish" and len(d["Danish"]) > 0:
             message = d["Danish"][0]
         elif category == "international" and len(d["International"]) > 0:
-            message = d["International"][0]
+            message = d["International"][randint(0, len(d["International"]))]
             d["International"] = d["International"][1: ]# remove the entry
-            #control the reading thread
+        #control the reading thread
         ## END IF ###
-        print("[Read]", category, message,category == "international", len(d["International"]))
+
+        print("[Read]", category, message,category == "international", self.intlSize(), self.totalSize() )
+        
         return message;
 
     def clear(self):
@@ -57,9 +66,25 @@ class toReadList():
             }
         return
 
+    def getFromDefault(self):
+        item = self.getRandomFromDefault("Danish")
+        self.append(item)
+
+        for i in range(0, 2):
+            item = self.getRandomFromDefault("English")
+            self.append(item)
+        for i in range(0, 6):
+            item = self.getRandomFromDefault("International")
+            self.append(item)
+
+    def getRandomFromDefault(self, lg):
+        return random.choice(self.defaultDictionary[lg])
+
     def intlSize(self):
         return len(self.dict["International"])
 
+    def totalSize(self):
+        return len(self.dict["International"]) + len(self.dict["Danish"]) + len(self.dict["English"])
 
 class sttResult(object):
     text = ""
@@ -68,6 +93,34 @@ class sttResult(object):
     def __init__(self, text, language):
         self.text = text
         self.language = language
+
+
+def loadDefaultResult():
+    size = 0
+    d = {
+            "English": [],
+            "Danish": [],
+            "International": []
+    }
+    with open(DEFAULT_RESULT_FILE , 'r') as myfile:
+        data = myfile.read()
+        lines = data.split('\n')
+        for s in lines:
+            size += 1
+            parts = s.split(':')
+            lg = parts[0]
+            text = parts[1]
+            item = sttResult(text,lg)
+
+            if lg == "da-DK":
+                d["Danish"].append(item)
+            elif "en" in lg:
+                d["English"].append(item)
+            else :
+                d["International"].append(item)
+    
+    print("Loaded default result:", size, len(d["Danish"]), len(d["English"]), len(d["International"]))
+    return d
 
 #################
 # Global variables
@@ -126,8 +179,6 @@ def listen_handler():
     print('[LISTEN]')
     # clear the list
     _toRead.clear()
-    #???
-    return
 
 # Read from the server
 # subEar.py -> server -> socket
@@ -140,10 +191,15 @@ def read_handler(name):
         'language': None
     }))
     emptyListResponse.headers['Content-Type'] = 'application/json'
+    
+    # Due with category and name
     category = name.lower()
     category = category[:-1]
+
     if category.startswith("international"):
         category = "international"
+
+
     try:
         readed = _toRead.read(category)
     except ValueError: 
