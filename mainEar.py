@@ -41,6 +41,8 @@ DANISH = ["da-DK","da-DK","da-DK","da-DK","da-DK","da-DK"]
 OTHERS = []
 EARS = [ENGLISHES, DANISH, OTHERS]
 
+# shared Global variables
+toRead = []
 
 # Main functions
 ######################################
@@ -105,11 +107,11 @@ def recGoogleTest(audio):
         pt("Could not request results from Google Speech Recognition service; {0}".format(e))
         return "";
 
-def recGoogleCloud(audio, lg, results=None):
+def recGoogleCloud(r, audio, lg, results=None):
     # Recognize speech using Google Cloud Speech
     # Supported languages: https://cloud.google.com/speech-to-text/docs/languages
     global toRead
-
+    
     try:
         result = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS,language=lg)
         pt("Google Cloud Speech thinks you said " + result)
@@ -135,10 +137,10 @@ def recGoogleCloud(audio, lg, results=None):
         pt("Could not request results from Google Cloud Speech service; {0}".format(e))
         return "";
 
-def batchRequestGoogleCloud(audio, target, limit):
-    
+def batchRequestGoogleCloud(r, audio, target, limit):
+     
     for lg in target:
-        recGoogleCloud(audio,lg)
+        recGoogleCloud(r, audio,lg)
 
     # for lg in subArray:
     #     print(lg)
@@ -197,55 +199,62 @@ def printAllLanguageCode():
 def pt(message):
     if dbug: print(message);
 
-def recog(audio, target):
+def recog(r, audio, target):
     pt("*********THREAD_RECOGNIZING*********")
-    results = batchRequestGoogleCloud(audio, target, LAN_LIMIT)
+    results = batchRequestGoogleCloud(r, audio, target, LAN_LIMIT)
     return
 
 #######################
+ 
+def my_main_function():
+    # Initialize speech recognition
+    r = MySR()
+    # Initialize server
+    # Change Server IP
 
-print("...initializing...")
-# Initialize speech recognition
-r = MySR()
-# Initialize server
-# Change Server IP
+    ready = requests.get(HELLOURL)
+    data = ready.content
 
-ready = requests.get(HELLOURL)
-data = ready.content
-# while not ready:
-#     ready = requests.get(POSTURL)
-#     time.sleep(3)
+    # while not ready:
+    #     ready = requests.get(POSTURL)
+    #     time.sleep(3)
 
-# Load language list
-loadLanguages()
-pt("Speech recognition with " + str(len(LANGUAGES)) + " Languages")
+    # Load language list
+    loadLanguages()
+    pt("Speech recognition with " + str(len(LANGUAGES)) + " Languages")
 
-# Load the sample audio file
-with sr.AudioFile(AUDIO_FILE) as source:
-    sampleAudio = r.record(source)  
+    # Load the sample audio file
+    with sr.AudioFile(AUDIO_FILE) as source:
+        sampleAudio = r.record(source)  
+
+    T_recognition = Thread(target=recog,args=(r, sampleAudio,TARGET))
+    T_recognition.start()
+
+    #########################################
+    
+    pt("Welcome to the empty ear machine! Say something!")
+    # Start listening
+    # obtain audio from the microphone
+    m = sr.Microphone()
+
+    # listen for 1 second and create the ambient noise energy level
+    with m as source:
+        r.adjust_for_ambient_noise(source, duration=1)
+
+    # start listening in the background (note that we don't have to do this inside a `with` statement)
+    stop_listening = r.listen_in_background(m, speechRecHandler) 
+
+    # do some unrelated computations for 5 seconds
+    for _ in range(50): time.sleep(0.1)  # we're still listening even though the main thread is doing other things
+
+    # do some more unrelated things
+    while True: time.sleep(0.1)  #
+ 
+if __name__=='__main__':
+    try:
+        my_main_function()
+    except:
+        my_main_function()
 
 
-# shared Global variables
-toRead = []
 
-T_recognition = Thread(target=recog,args=(sampleAudio,TARGET))
-T_recognition.start()
-
-pt("Welcome to the empty ear machine! Say something!")
-# Start listening
-# obtain audio from the microphone
-m = sr.Microphone()
-
-# listen for 1 second and create the ambient noise energy level
-with m as source:
-    r.adjust_for_ambient_noise(source, duration=1)
-
-# start listening in the background (note that we don't have to do this inside a `with` statement)
-stop_listening = r.listen_in_background(m, speechRecHandler) 
-
-# do some unrelated computations for 5 seconds
-for _ in range(50): time.sleep(0.1)  # we're still listening even though the main thread is doing other things
-
-# do some more unrelated things
-while True: time.sleep(0.1)
-#
